@@ -1,18 +1,25 @@
 package com.ctytech.flierly.organization.entity;
 
-import java.io.Serializable;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.io.Serializable;
+@Entity
+@Getter @Setter
 public class Organization implements Serializable {
 
-    private String OrgId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
+    private String name;
 
-    private String OrgName;
+    @Email
+    private String email;
 
-    private String Address;
-
-    private String Contact;
-
-    private String Email;
-
-    private Long Phone;
+    @NotNull
+    private Long phone;
 }
