@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableAutoConfiguration(exclude = {
 		org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-		org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class
+//		org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class
 })
 @SpringBootApplication
 public class FlierlyApplication {
