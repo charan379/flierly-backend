@@ -2,6 +2,7 @@ package com.ctytech.flierly.address.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "addresses")
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class Address implements Serializable {
 
     @Id
@@ -17,7 +18,6 @@ public class Address implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, columnDefinition = "default 'n'")
     private Boolean isPrimary;
 
     @NotNull
