@@ -6,6 +6,7 @@ import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "branches")
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class Branch implements Serializable {
 
     @Id
