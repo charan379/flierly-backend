@@ -26,7 +26,7 @@ public class Branch implements Serializable {
 
     @NotNull
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_address_fkey"))
+    @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_address_fkey"), updatable = false)
     private Address address;
 
     @NotNull
