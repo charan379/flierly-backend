@@ -3,11 +3,15 @@ package com.ctytech.flierly.taxation.entity;
 import com.ctytech.flierly.organization.entity.Organization;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Getter @Setter @EqualsAndHashCode
 @Table(name = "taxIdentities", uniqueConstraints = {
         // orgId + gst
         @UniqueConstraint(name = "uniqueOrgIdAndGst", columnNames = {"orgId", "gst"}),
