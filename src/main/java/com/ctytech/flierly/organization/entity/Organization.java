@@ -3,12 +3,13 @@ package com.ctytech.flierly.organization.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 @Entity
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class Organization implements Serializable {
 
     @Id
