@@ -38,3 +38,4 @@ out/
 
 # Spring #
 application.properties
+/src/main/resources/application*.yml
