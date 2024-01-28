@@ -21,11 +21,6 @@ public class Branch implements Serializable {
     private Long id;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "orgId" ,referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_org_fkey"))
-    private Organization organization;
-
-    @NotNull
     private String name;
 
     @NotNull
