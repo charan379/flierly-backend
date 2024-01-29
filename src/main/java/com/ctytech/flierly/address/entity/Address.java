@@ -29,6 +29,7 @@ public class Address implements Serializable {
 
     @NotNull
     private String country;
+
     @NotNull
     private String state;
 
@@ -36,7 +37,7 @@ public class Address implements Serializable {
     private String district;
 
     @NotNull
-    private Long pincode;
+    private Long postalIdentity;
 
     @NotNull
     private String area;
