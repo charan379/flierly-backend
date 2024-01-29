@@ -18,7 +18,9 @@ import java.time.LocalDate;
         // branchId + vat
         @UniqueConstraint(columnNames = {"branchId", "vat" }, name = "branch_and_vat_ukey"),
         // branchId + pan
-        @UniqueConstraint(columnNames = {"branchId", "pan" }, name = "branch_and_pan_ukey")
+        @UniqueConstraint(columnNames = {"branchId", "pan" }, name = "branch_and_pan_ukey"),
+        // branchId + tin
+        @UniqueConstraint(columnNames = {"branchId", "tin"}, name = "branch_and_tin_ukey")
 })
 public class TaxIdentity implements Serializable {
 
@@ -30,22 +32,19 @@ public class TaxIdentity implements Serializable {
     @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_and_branch_fkey"), updatable = false)
     private Branch branch;
 
-    @NotNull
-    private String country;
-
-    @NotNull
-    private String state;
-
-    @NotNull
-    private Integer stateCode;
-
     private String gst;
 
 //    private String gstType;
 
     private LocalDate gstRegistrationDate;
 
+    private Boolean gstVerified;
+
     private String pan;
 
+    private  Boolean panVerified;
+
     private String vat;
+
+    private String tin;
 }
