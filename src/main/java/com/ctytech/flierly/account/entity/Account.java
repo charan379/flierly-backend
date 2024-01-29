@@ -60,6 +60,6 @@ public class Account implements Serializable {
     })
     private Set<Account> childAccounts = new HashSet<Account>();
 
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     private Account parentAccount;
 }
