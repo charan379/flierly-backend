@@ -30,5 +30,5 @@ public class Country {
     private Integer dialingCode;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "country")
-    private Set<State> states = new HashSet<State>();
+    private Set<State> states = new HashSet<>();
 }

@@ -2,6 +2,9 @@ package com.ctytech.flierly.address.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,6 +31,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "postalIdentities")
+@Getter @Setter @EqualsAndHashCode
 public class PostalIdentity {
 
     @Id
@@ -43,5 +47,5 @@ public class PostalIdentity {
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_areas_fkey"))
-    private Set<Area> areas = new HashSet<Area>();
+    private Set<Area> areas = new HashSet<>();
 }

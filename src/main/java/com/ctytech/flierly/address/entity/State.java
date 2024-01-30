@@ -58,5 +58,5 @@ public class State {
     private Country country;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "state")
-    private Set<District> districts = new HashSet<District>();
+    private Set<District> districts = new HashSet<>();
 }

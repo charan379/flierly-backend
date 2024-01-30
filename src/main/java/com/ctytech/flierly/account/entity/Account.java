@@ -52,7 +52,7 @@ public class Account implements Serializable {
     }, inverseJoinColumns = {
             @JoinColumn(name = "contactId", referencedColumnName = "id")
     })
-    private Set<Contact> contacts = new HashSet<Contact>();
+    private Set<Contact> contacts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(name = "accountParentChildAssociations", joinColumns = {
@@ -60,7 +60,7 @@ public class Account implements Serializable {
     }, inverseJoinColumns = {
             @JoinColumn(name = "childAccountId", referencedColumnName = "id")
     })
-    private Set<Account> childAccounts = new HashSet<Account>();
+    private Set<Account> childAccounts = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Account parentAccount;

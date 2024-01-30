@@ -35,6 +35,6 @@ public class District {
     private State state;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "district")
-    private Set<City> cities = new HashSet<City>();
+    private Set<City> cities = new HashSet<>();
 
 }

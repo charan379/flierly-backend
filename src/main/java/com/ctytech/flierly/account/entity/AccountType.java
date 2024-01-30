@@ -29,5 +29,5 @@ public class AccountType implements Serializable {
     },inverseJoinColumns =  {
             @JoinColumn(name = "accountSubtype", referencedColumnName = "id")
     })
-    private Set<AccountSubtype> accountSubtypes = new HashSet<AccountSubtype>();
+    private Set<AccountSubtype> accountSubtypes = new HashSet<>();
 }

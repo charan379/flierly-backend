@@ -2,12 +2,16 @@ package com.ctytech.flierly.address.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "cities")
+@Getter @Setter @EqualsAndHashCode
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,6 @@ public class City {
     private District district;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "city")
-    private Set<PostalIdentity> postalIdentities = new HashSet<PostalIdentity>();
+    private Set<PostalIdentity> postalIdentities = new HashSet<>();
 
 }
