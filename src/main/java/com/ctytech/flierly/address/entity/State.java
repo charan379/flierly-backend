@@ -9,9 +9,28 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * <h1>State Entity<br/> <small> &nbsp table_name: states</small> </h1>
+ * <h3>Custom Indexes</h3>
+ * <p>
+ * This Entity will also have custom indexes other than auto generated indexes
+ * This indexes will be created and maintained through native sql scripts
+ * <br/>
+ * <br/>
+ * <h4>Partial Indexes</h4>
+ * <p>Partial indexes on this entity for columns with null values will guarantees unique non-null values in the columns{"gstCode"} while allowing multiple nulls, optimizing queries and saving storage
+ * </p>
+ * <ul>
+ *     <li>
+ *         <p><b>idx_p_unique_country_and_gst_code</b></p>
+ *         <p><b>Columns {"countryId", "gstCode"}</b></p>
+ *         <p>Condition: If gstCode is not null</p>
+ *     </li>
+ * </ul>
+ * </p>
+ */
 @Entity()
 @Table(name = "states", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"gstCode", "countryId"}),
         @UniqueConstraint(columnNames = {"nameCode", "countryId"})
 })
 @Getter @Setter @EqualsAndHashCode
