@@ -1,8 +1,8 @@
 package com.ctytech.flierly.taxation.entity;
 
+import com.ctytech.flierly.address.entity.Address;
 import com.ctytech.flierly.organization.entity.Branch;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -58,19 +58,25 @@ public class TaxIdentity implements Serializable {
     @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_and_branch_fkey"), updatable = false)
     private Branch branch;
 
+    @Column(length = 55, updatable = false)
     private String gst;
-
-//    private String gstType;
 
     private LocalDate gstRegistrationDate;
 
     private Boolean gstVerified;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "gstRegistrationAddress", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_and_gst_reg_address_fkey"))
+    private Address gstRegistrationAddress;
+
+    @Column(length = 30)
     private String pan;
 
     private  Boolean panVerified;
 
+    @Column(length = 55)
     private String vat;
 
+    @Column(length = 55)
     private String tin;
 }
