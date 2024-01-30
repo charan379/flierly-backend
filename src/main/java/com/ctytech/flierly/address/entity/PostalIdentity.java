@@ -36,6 +36,7 @@ public class PostalIdentity {
 
     private Integer pinCode;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_and_city_fkey" ))
     private City city;
