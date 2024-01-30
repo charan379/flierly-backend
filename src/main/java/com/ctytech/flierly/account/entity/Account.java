@@ -32,10 +32,12 @@ public class Account implements Serializable {
     @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_and_branch_fkey"), updatable = false)
     private Branch branch;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "accountType", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_and_account_type_fkey"))
     private AccountType accountType;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "accountSubtype", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_and_account_subtype_fkey"))
     private AccountSubtype accountSubtype;
