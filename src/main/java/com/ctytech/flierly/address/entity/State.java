@@ -52,6 +52,7 @@ public class State {
     @Column(updatable = false)
     private Integer gstCode;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
     @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "state_and_country_fkey"), updatable = false)
     private Country country;
