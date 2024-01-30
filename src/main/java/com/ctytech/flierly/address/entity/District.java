@@ -29,6 +29,7 @@ public class District {
 
     private Integer landlineCode;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "stateId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "district_and_state_fkey"))
     private State state;
