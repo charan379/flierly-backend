@@ -16,6 +16,7 @@ public class City {
     @NotNull
     private String name;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "districtId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "city_district_fkey"))
     private District district;
