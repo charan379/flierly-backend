@@ -42,8 +42,8 @@ public class Account implements Serializable {
     @JoinColumn(name = "accountSubtype", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_and_account_subtype_fkey"))
     private AccountSubtype accountSubtype;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "taxIdentity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_and_tax_identity_fkey"))
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "taxIdentity", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_and_tax_identity_fkey"), updatable = false)
     private TaxIdentity taxIdentity;
 
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
