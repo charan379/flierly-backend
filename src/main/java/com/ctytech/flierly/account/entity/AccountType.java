@@ -24,7 +24,7 @@ public class AccountType implements Serializable {
 
     @NotNull
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinTable(name = "accountTypeSubtypeAssociations",joinColumns = {
+    @JoinTable(name = "accountTypesLineage",joinColumns = {
             @JoinColumn(name = "accountType", referencedColumnName = "id")
     },inverseJoinColumns =  {
             @JoinColumn(name = "accountSubtype", referencedColumnName = "id")
