@@ -1,4 +1,4 @@
-package com.ctytech.flierly.contacts.enitity;
+package com.ctytech.flierly.contact.enitity;
 
 import com.ctytech.flierly.organization.entity.Branch;
 import jakarta.persistence.*;

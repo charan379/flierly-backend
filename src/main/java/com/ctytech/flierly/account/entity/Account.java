@@ -1,6 +1,6 @@
 package com.ctytech.flierly.account.entity;
 
-import com.ctytech.flierly.contacts.enitity.Contact;
+import com.ctytech.flierly.contact.enitity.Contact;
 import com.ctytech.flierly.organization.entity.Branch;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import jakarta.persistence.*;
