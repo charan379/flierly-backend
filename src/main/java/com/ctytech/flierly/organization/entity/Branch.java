@@ -29,7 +29,7 @@ public class Branch implements Serializable {
     private Address address;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "taxIdentityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_tax_identity_fkey"))
     private TaxIdentity taxIdentity;
 
