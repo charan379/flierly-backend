@@ -49,7 +49,7 @@ public class Address implements Serializable {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_area_fkey"))
+    @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_postal_identity_fkey"))
     private PostalIdentity postalIdentity;
 
     @NotNull
