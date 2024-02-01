@@ -17,7 +17,7 @@ public class Contact {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "contact_and_branch_fkey"), updatable = false)
+    @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "contact_branch_fkey"), updatable = false)
     private Branch branch;
 
     @NotNull

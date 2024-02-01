@@ -42,7 +42,7 @@ public class PostalIdentity {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_and_city_fkey" ))
+    @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_city_fkey" ))
     private City city;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

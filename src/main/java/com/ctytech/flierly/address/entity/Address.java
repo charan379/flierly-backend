@@ -29,32 +29,32 @@ public class Address implements Serializable {
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_country_fkey"))
+    @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_country_fkey"))
     private Country country;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "stateId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_state_fkey"))
+    @JoinColumn(name = "stateId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_state_fkey"))
     private State state;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "districtId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_district_fkey"))
+    @JoinColumn(name = "districtId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_district_fkey"))
     private District district;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_city_fkey"))
+    @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_city_fkey"))
     private City city;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_postal_identity_fkey"))
+    @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_postal_identity_fkey"))
     private PostalIdentity postalIdentity;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "areaId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_and_area_fkey"))
+    @JoinColumn(name = "areaId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_area_fkey"))
     private Area area;
 
     private String landMark;

@@ -55,7 +55,7 @@ public class TaxIdentity implements Serializable {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_and_branch_fkey"), updatable = false)
+    @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_branch_fkey"), updatable = false)
     private Branch branch;
 
     @Column(length = 55, updatable = false)
@@ -66,7 +66,7 @@ public class TaxIdentity implements Serializable {
     private Boolean gstVerified;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "gstRegistrationAddress", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_and_gst_reg_address_fkey"))
+    @JoinColumn(name = "gstRegistrationAddress", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_gst_reg_address_fkey"))
     private Address gstRegistrationAddress;
 
     @Column(length = 30)
