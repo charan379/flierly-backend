@@ -55,7 +55,7 @@ public class Account implements Serializable {
     private Set<Contact> contacts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinTable(name = "accountParentChildAssociations", joinColumns = {
+    @JoinTable(name = "accountsLineage", joinColumns = {
             @JoinColumn(name = "parentAccountId", referencedColumnName = "id")
     }, inverseJoinColumns = {
             @JoinColumn(name = "childAccountId", referencedColumnName = "id")
