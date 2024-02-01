@@ -43,13 +43,4 @@ public class Branch implements Serializable {
     @Email
     private String email;
 
-    @NotNull
-    private String country;
-
-    @NotNull
-    private String state;
-
-    @NotNull
-    private String district;
-
 }
