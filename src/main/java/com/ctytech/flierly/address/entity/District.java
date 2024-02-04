@@ -18,7 +18,7 @@ public class District {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotNull
     @Column(updatable = false, length = 100)
