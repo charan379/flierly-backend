@@ -22,6 +22,7 @@ public class ProductAttributeSchema {
     @NotNull
     private String displayName;
 
+    @Column(columnDefinition = "boolean default false")
     private Boolean isRequired;
 
     @NotNull

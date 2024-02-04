@@ -22,10 +22,10 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(columnDefinition = "boolean default false")
     private Boolean isVip;
 
-    @NotNull
+    @Column(columnDefinition = "boolean default false")
     private Boolean isKey;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)

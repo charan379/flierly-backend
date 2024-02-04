@@ -47,6 +47,7 @@ public class State {
     @NotNull
     private String displayName;
 
+    @Column(columnDefinition = "boolean default false")
     private Boolean isUnionTerritory;
 
     @Column(updatable = false)

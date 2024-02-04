@@ -18,7 +18,7 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Column(columnDefinition = "boolean default false")
     private Boolean isPrimary;
 
     @NotNull

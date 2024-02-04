@@ -27,6 +27,7 @@ public class Product {
     @Column(unique = true)
     private String name;
 
+    @Column(columnDefinition = "boolean default false")
     private Boolean isSerialized;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")

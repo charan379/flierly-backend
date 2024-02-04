@@ -63,6 +63,7 @@ public class TaxIdentity implements Serializable {
 
     private LocalDate gstRegistrationDate;
 
+    @Column(columnDefinition = "boolean default false")
     private Boolean gstVerified;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
@@ -72,6 +73,7 @@ public class TaxIdentity implements Serializable {
     @Column(length = 30)
     private String pan;
 
+    @Column(columnDefinition = "boolean default false")
     private  Boolean panVerified;
 
     @Column(length = 55)
