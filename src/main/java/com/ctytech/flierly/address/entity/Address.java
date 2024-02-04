@@ -59,7 +59,9 @@ public class Address implements Serializable {
 
     private String landMark;
 
-    private Double latitude;
+    @Column(columnDefinition = "numeric(10,7)")
+    private BigDecimal latitude;
 
-    private Double longitude;
+    @Column(columnDefinition = "numeric(10,7)")
+    private BigDecimal longitude;
 }
