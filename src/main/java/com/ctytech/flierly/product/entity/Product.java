@@ -1,6 +1,8 @@
 package com.ctytech.flierly.product.entity;
 
 import com.ctytech.flierly.organization.entity.Branch;
+import com.ctytech.flierly.uom.entity.UnitOfMeasurement;
+import com.ctytech.flierly.uom.entity.UomConversion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -29,6 +31,19 @@ public class Product {
 
     @Column(columnDefinition = "boolean default false")
     private Boolean isSerialized;
+
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "uomId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_uom_fkey"))
+    private UnitOfMeasurement uom;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "productUomConversions", joinColumns = {
+            @JoinColumn(name = "productId", referencedColumnName = "id")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "uomConversionId", referencedColumnName = "id")
+    })
+    private Set<UomConversion> uomConversions;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private Set<ProductAttribute> productAttributes = new HashSet<>();
