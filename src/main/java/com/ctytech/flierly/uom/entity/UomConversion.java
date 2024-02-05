@@ -26,11 +26,11 @@ public class UomConversion {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "fromUomId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "uom_conversion_from_uom_fkey"))
-    private UnitOfMeasurement fromUom;
+    private Uom fromUom;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "toUomId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "uom_conversion_to_uom_fkey"))
-    private UnitOfMeasurement toUom;
+    private Uom toUom;
 
     @Column(columnDefinition = "numeric(10,2) default 1.0")
     private BigDecimal conversionFactor;

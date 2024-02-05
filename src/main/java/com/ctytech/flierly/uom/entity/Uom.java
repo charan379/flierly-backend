@@ -7,9 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "unitOfMeasurements")
+@Table(name = "uoms")
 @Getter @Setter @EqualsAndHashCode
-public class UnitOfMeasurement {
+public class Uom {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 package com.ctytech.flierly.product.entity;
 
 import com.ctytech.flierly.organization.entity.Branch;
-import com.ctytech.flierly.uom.entity.UnitOfMeasurement;
+import com.ctytech.flierly.uom.entity.Uom;
 import com.ctytech.flierly.uom.entity.UomConversion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +35,7 @@ public class Product {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "uomId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "product_uom_fkey"))
-    private UnitOfMeasurement uom;
+    private Uom uom;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "productUomConversions", joinColumns = {
