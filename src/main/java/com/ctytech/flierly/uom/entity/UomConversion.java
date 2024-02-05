@@ -32,6 +32,6 @@ public class UomConversion {
     @JoinColumn(name = "toUomId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "uom_conversion_to_uom_fkey"))
     private Uom toUom;
 
-    @Column(columnDefinition = "numeric(10,2) default 1.0")
+    @Column(columnDefinition = "numeric(10,10) default 1.0")
     private BigDecimal conversionFactor;
 }
