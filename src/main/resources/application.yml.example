@@ -13,3 +13,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Server
+server:
+  port: <Value> # Application Port ex: 3111
+  servlet:
+    context-path: <Value> # Application starting path ex: /api
