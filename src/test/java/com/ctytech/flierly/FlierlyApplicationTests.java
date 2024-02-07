@@ -1,5 +1,6 @@
 package com.ctytech.flierly;
 
+import com.ctytech.flierly.uom.exception.UomServiceException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,17 @@ class FlierlyApplicationTests {
 
 		System.out.printf("This converted qty to packs is : %f", qtyCon.stripTrailingZeros());
 
+	}
+
+	@Test
+	@DisplayName("Simple Test: Exception")
+	void simpleTest2() {
+
+		try {
+			throw new UomServiceException("Some error happened !");
+		} catch (UomServiceException e) {
+			System.out.println(e.getClass().getName());
+		}
 	}
 
 
