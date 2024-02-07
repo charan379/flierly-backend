@@ -2,6 +2,7 @@ package com.ctytech.flierly.asset.entity;
 
 import com.ctytech.flierly.account.entity.Account;
 import com.ctytech.flierly.organization.entity.Branch;
+import com.ctytech.flierly.product.entity.Product;
 import com.ctytech.flierly.salesandpurchase.entity.PurchaseInvoice;
 import com.ctytech.flierly.salesandpurchase.entity.SalesInvoice;
 import jakarta.persistence.*;
@@ -48,11 +49,11 @@ public class Asset {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "purchasedFromAccId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "asset_purchased_from_account_fkey"))
-    private Long purchasedFromAccount;
+    private Account purchasedFromAccount;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "productId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "asset_parent_product_fkey"))
-    private Long product;
+    private Product product;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "assetStatusId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "asset_asset_status_fkey"))
