@@ -1,26 +1,36 @@
 package com.ctytech.flierly.organization.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+
 @Entity
-@Getter @Setter @EqualsAndHashCode
+@Table(name = "organization")
+@SequenceGenerator(name = "organization_id_generator", sequenceName = "organization_id_seq", initialValue = 1000, allocationSize = 1)
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Organization implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "organization_id_generator")
     private Long id;
-    @NotNull
+
+    @NotBlank(message = "{organization.name.absent}")
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @Email
+    @Email(message = "{email.invalid}")
+    @NotBlank(message = "{organization.email.absent}")
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @NotNull
-    private Long phone;
+    @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
+    @NotNull(message = "{organization.phone.absent}")
+    @Column(unique = true, nullable = false)
+    private String phone;
 }
