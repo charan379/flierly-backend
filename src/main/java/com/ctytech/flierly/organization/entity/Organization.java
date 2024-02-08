@@ -30,7 +30,7 @@ public class Organization implements Serializable {
     private String email;
 
     @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
-    @NotNull(message = "{organization.phone.absent}")
+    @NotBlank(message = "{organization.phone.absent}")
     @Column(unique = true, nullable = false)
     private String phone;
 }
