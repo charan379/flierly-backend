@@ -24,7 +24,7 @@ import java.util.Set;
  *     <li>
  *         <p><b>idx_p_unique_gst</b></p>
  *         <p><b>Columns {"cityId", "pinCode"}</b></p>
- *         <p>Condition: If pinCode is not null</p>
+ *         <p>Condition: If cityId, pinCode are not null</p>
  *     </li>
  * </ul>
  * </p>
@@ -47,7 +47,7 @@ public class PostalIdentity {
     @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_city_fkey"))
     private City city;
 
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.REMOVE,CascadeType.PERSIST }, fetch = FetchType.LAZY)
     @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_areas_fkey"))
     private Set<Area> areas;
 }
