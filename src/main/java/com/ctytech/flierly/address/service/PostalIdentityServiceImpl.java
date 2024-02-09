@@ -1,5 +1,6 @@
 package com.ctytech.flierly.address.service;
 
+import com.ctytech.flierly.address.dto.CityDTO;
 import com.ctytech.flierly.address.dto.PostalIdentityDTO;
 import com.ctytech.flierly.address.entity.PostalIdentity;
 import com.ctytech.flierly.address.exception.PostalIdentityServiceException;
@@ -7,6 +8,8 @@ import com.ctytech.flierly.address.mapper.PostalIdentityMapper;
 import com.ctytech.flierly.address.repository.PostalIdentityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service(value = "postalIdentityService")
 public class PostalIdentityServiceImpl implements PostalIdentityService {
@@ -20,7 +23,10 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
     @Override
     public PostalIdentityDTO save(PostalIdentityDTO postalIdentityDTO) throws PostalIdentityServiceException {
 
-        Long cityId = postalIdentityDTO.getCity().getId();
+        Long cityId = Optional.ofNullable(postalIdentityDTO.getCity())
+                .map(CityDTO::getId)
+                .orElse(null);
+
         Integer pinCode = postalIdentityDTO.getPinCode();
 
         if (cityId != null && pinCode != null && existsByCityIdAndPincode(cityId, pinCode))
