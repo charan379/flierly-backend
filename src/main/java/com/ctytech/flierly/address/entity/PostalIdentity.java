@@ -31,21 +31,23 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "postalIdentities")
-@Getter @Setter @EqualsAndHashCode
+@SequenceGenerator(name = "postal_identity_id_generator", sequenceName = "postal_identity_id_seq", initialValue = 1000, allocationSize = 1)
+@Getter
+@Setter
+@EqualsAndHashCode
 public class PostalIdentity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "postal_identity_id_generator")
     private Long id;
 
     private Integer pinCode;
 
-    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_city_fkey" ))
+    @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_city_fkey"))
     private City city;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_areas_fkey"))
-    private Set<Area> areas = new HashSet<>();
+    private Set<Area> areas;
 }

@@ -1,59 +1,66 @@
 package com.ctytech.flierly.address.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
+
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "addresses")
-@Getter @Setter @EqualsAndHashCode
-public class Address implements Serializable {
+@SequenceGenerator(name = "address_id_generator", sequenceName = "address_id_seq", initialValue = 1000, allocationSize = 1)
+@Getter
+@Setter
+@EqualsAndHashCode
+public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_generator")
     private Long id;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isActive;
 
     @Column(columnDefinition = "boolean default false")
     private Boolean isPrimary;
 
-    @NotNull
+    @NotBlank(message = "{address.line1.absent}")
     private String line1;
 
     private String line2;
 
-    private  String line3;
+    private String line3;
 
-    @NotNull
+    @NotNull(message = "{address.country.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_country_fkey"))
     private Country country;
 
-    @NotNull
+    @NotNull(message = "{address.state.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "stateId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_state_fkey"))
     private State state;
 
-    @NotNull
+    @NotNull(message = "{address.district.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "districtId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_district_fkey"))
     private District district;
 
-    @NotNull
+    @NotNull(message = "{address.city.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_city_fkey"))
     private City city;
 
-    @NotNull
+    @NotNull(message = "{address.postalIdentity.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_postal_identity_fkey"))
     private PostalIdentity postalIdentity;
 
-    @NotNull
+    @NotNull(message = "{address.area.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "areaId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "address_area_fkey"))
     private Area area;

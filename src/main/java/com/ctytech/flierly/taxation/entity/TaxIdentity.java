@@ -3,6 +3,7 @@ package com.ctytech.flierly.taxation.entity;
 import com.ctytech.flierly.address.entity.Address;
 import com.ctytech.flierly.organization.entity.Branch;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,13 +47,19 @@ import java.time.LocalDate;
  * </p>
  */
 @Entity
-@Getter @Setter @EqualsAndHashCode
+@Getter
+@Setter
+@EqualsAndHashCode
 @Table(name = "taxIdentities")
+@SequenceGenerator(name = "tax_identity_id_generator", sequenceName = "tax_identity_id_seq", initialValue = 1000, allocationSize = 1)
 public class TaxIdentity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tax_identity_id_generator")
     private Long id;
+
+    @Column(columnDefinition = "boolean default false")
+    private Boolean isActive;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_branch_fkey"), updatable = false)
@@ -61,6 +68,7 @@ public class TaxIdentity implements Serializable {
     @Column(length = 55, updatable = false)
     private String gst;
 
+    @PastOrPresent(message = "{taxIdentity.gstRegDate.invalid}")
     private LocalDate gstRegistrationDate;
 
     @Column(columnDefinition = "boolean default false")
@@ -74,7 +82,7 @@ public class TaxIdentity implements Serializable {
     private String pan;
 
     @Column(columnDefinition = "boolean default false")
-    private  Boolean panVerified;
+    private Boolean panVerified;
 
     @Column(length = 55)
     private String vat;

@@ -31,6 +31,6 @@ public class Organization implements Serializable {
 
     @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
     @NotBlank(message = "{organization.phone.absent}")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 13)
     private String phone;
 }

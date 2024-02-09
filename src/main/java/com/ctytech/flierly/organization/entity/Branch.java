@@ -29,7 +29,7 @@ public class Branch implements Serializable {
     private String name;
 
     @Column(columnDefinition = "boolean default false")
-    private Boolean isDeleted;
+    private Boolean isActive;
 
     @NotNull(message = "{branch.address.absent")
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
@@ -43,11 +43,11 @@ public class Branch implements Serializable {
 
     @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
     @NotBlank(message = "{branch.phone.absent}")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 13)
     private String phone;
 
     @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
-    @Column(unique = true)
+    @Column(length = 13)
     private String alternatePhone;
 
     @Email(message = "{email.invalid}")

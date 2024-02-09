@@ -1,12 +1,11 @@
 package com.ctytech.flierly.address.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,22 +29,25 @@ import java.util.Set;
  * </p>
  */
 @Entity()
-@Table(name = "states", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"nameCode", "countryId"})
-})
-@Getter @Setter @EqualsAndHashCode
+@Table(name = "states", uniqueConstraints = {@UniqueConstraint(columnNames = {"code", "countryId"})})
+@SequenceGenerator(name = "state_id_generator", sequenceName = "state_id_seq", initialValue = 1000, allocationSize = 1)
+@Getter
+@Setter
+@EqualsAndHashCode
 public class State {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "state_id_generator")
     private Long id;
 
-    @NotNull
+    @NotBlank(message = "{state.code.absent}")
+    @Size(max = 100, message = "{code.size.invalid}")
+    @Pattern(regexp = "^[a-z_]+$", message = "{code.pattern.invalid}")
     @Column(updatable = false, length = 100)
-    private String nameCode;
+    private String code;
 
-    @NotNull
-    private String displayName;
+    @NotEmpty(message = "{state.name.absent}")
+    private String name;
 
     @Column(columnDefinition = "boolean default false")
     private Boolean isUnionTerritory;
@@ -53,11 +55,10 @@ public class State {
     @Column(updatable = false)
     private Integer gstCode;
 
-    @NotNull
-    @ManyToOne(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "state_country_fkey"), updatable = false)
     private Country country;
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "state")
-    private Set<District> districts = new HashSet<>();
+    private Set<District> districts;
 }
