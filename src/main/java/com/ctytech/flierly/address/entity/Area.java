@@ -21,4 +21,8 @@ public class Area {
 
     @NotBlank(message = "{area.name.absent}")
     private String name;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "postalId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "area_postal_identity_fkey"))
+    private PostalIdentity postalIdentity;
 }
