@@ -1,6 +1,5 @@
 package com.ctytech.flierly.address.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -9,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.Set;
+
 
 @Getter
 @Setter
@@ -29,7 +28,4 @@ public class DistrictDTO implements Serializable {
     private Integer landlineCode;
 
     private StateDTO state;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Set<CityDTO> cities;
 }
