@@ -30,5 +30,11 @@ public class PostalIdentityController {
 
         return new ResponseEntity<>(postalIdentityDTO, HttpStatus.OK);
     }
-    
+
+    @PutMapping(value = "/{pId}")
+    public ResponseEntity<PostalIdentityDTO> updatePIById(@PathVariable(name = "pId") Long pId, @RequestBody @Valid PostalIdentityDTO update) throws PostalIdentityServiceException {
+        PostalIdentityDTO postalIdentityDTO = postalIdentityService.modify(pId, update);
+
+        return new ResponseEntity<>(postalIdentityDTO, HttpStatus.OK);
+    }
 }
