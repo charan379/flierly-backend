@@ -6,8 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "districts", uniqueConstraints = {@UniqueConstraint(columnNames = {"code", "stateId"})})
 @SequenceGenerator(name = "district_id_generator", sequenceName = "district_id_seq", initialValue = 1000, allocationSize = 1)

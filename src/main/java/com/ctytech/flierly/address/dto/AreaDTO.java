@@ -1,6 +1,5 @@
 package com.ctytech.flierly.address.dto;
 
-import com.ctytech.flierly.address.entity.PostalIdentity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

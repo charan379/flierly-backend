@@ -6,8 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "countries")
 @SequenceGenerator(name = "country_id_generator", sequenceName = "country_id_seq", initialValue = 1000, allocationSize = 1)

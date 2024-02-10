@@ -1,13 +1,9 @@
 package com.ctytech.flierly.address.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * <h1>PostalIdentity Entity<br/> <small> &nbsp tableName: postalIdentities</small> </h1>
