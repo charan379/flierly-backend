@@ -29,7 +29,4 @@ public class CountryDTO implements Serializable {
 
     @NotNull(message = "{country.dialingCode.absent}")
     private Integer dialingCode;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Set<StateDTO> states;
 }

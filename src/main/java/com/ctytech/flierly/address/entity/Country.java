@@ -32,7 +32,4 @@ public class Country {
     @NotNull(message = "{country.dialingCode.absent}")
     @Column(unique = true)
     private Integer dialingCode;
-
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "country")
-    private Set<State> states;
 }
