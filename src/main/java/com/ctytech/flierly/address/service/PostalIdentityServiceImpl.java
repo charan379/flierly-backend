@@ -23,9 +23,7 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
     @Override
     public PostalIdentityDTO save(PostalIdentityDTO postalIdentityDTO) throws PostalIdentityServiceException {
 
-        Long cityId = Optional.ofNullable(postalIdentityDTO.getCity())
-                .map(CityDTO::getId)
-                .orElse(null);
+        Long cityId = Optional.ofNullable(postalIdentityDTO.getCity()).map(CityDTO::getId).orElse(null);
 
         Integer pinCode = postalIdentityDTO.getPinCode();
 
@@ -46,7 +44,14 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
 
     @Override
     public PostalIdentityDTO modify(Long id, PostalIdentityDTO update) throws PostalIdentityServiceException {
-        return null;
+        PostalIdentity postalIdentity = postalIdentityRepository.findById(id).orElseThrow(() -> new PostalIdentityServiceException("PostalIdentity.NOT_FOUND"));
+
+        Integer existingPincode = postalIdentity.getPinCode();
+        Integer newPincode = update.getPinCode();
+
+        if (existingPincode == null) postalIdentity.setPinCode(newPincode);
+
+        return postalIdentityMapper.toDTO(postalIdentityRepository.save(postalIdentity));
     }
 
     @Override
