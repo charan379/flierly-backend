@@ -22,7 +22,4 @@ public class CityDTO implements Serializable {
     private String name;
 
     private DistrictDTO district;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Set<PostalIdentityDTO> postalIdentities;
 }
