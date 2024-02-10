@@ -6,7 +6,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
 
 /**
  * <h1>State Entity<br/> <small> &nbsp table_name: states</small> </h1>
@@ -58,7 +57,4 @@ public class State {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "state_country_fkey"), updatable = false)
     private Country country;
-
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "state")
-    private Set<District> districts;
 }
