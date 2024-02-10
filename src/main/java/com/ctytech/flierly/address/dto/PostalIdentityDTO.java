@@ -19,7 +19,4 @@ public class PostalIdentityDTO implements Serializable {
     private Integer pinCode;
 
     private CityDTO city;
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Set<AreaDTO> areas;
 }
