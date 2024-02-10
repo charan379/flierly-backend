@@ -7,10 +7,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/postal-id")
+@Validated
 public class PostalIdentityController {
 
     @Autowired
@@ -24,16 +26,16 @@ public class PostalIdentityController {
         return new ResponseEntity<>(postalIdentityDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/{pId}")
-    public ResponseEntity<PostalIdentityDTO> getPIById(@PathVariable(name = "pId") Long pId) throws PostalIdentityServiceException {
-        PostalIdentityDTO postalIdentityDTO = postalIdentityService.fetch(pId);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<PostalIdentityDTO> getPIById(@PathVariable(name = "id") Long id) throws PostalIdentityServiceException {
+        PostalIdentityDTO postalIdentityDTO = postalIdentityService.fetch(id);
 
         return new ResponseEntity<>(postalIdentityDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{pId}")
-    public ResponseEntity<PostalIdentityDTO> updatePIById(@PathVariable(name = "pId") Long pId, @RequestBody @Valid PostalIdentityDTO update) throws PostalIdentityServiceException {
-        PostalIdentityDTO postalIdentityDTO = postalIdentityService.modify(pId, update);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<PostalIdentityDTO> updatePIById(@PathVariable(name = "id") Long id, @RequestBody @Valid PostalIdentityDTO update) throws PostalIdentityServiceException {
+        PostalIdentityDTO postalIdentityDTO = postalIdentityService.modify(id, update);
 
         return new ResponseEntity<>(postalIdentityDTO, HttpStatus.OK);
     }
