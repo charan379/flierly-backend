@@ -26,18 +26,18 @@ public class OrganizationController {
         return new ResponseEntity<>(organizationDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/{orgId}")
-    public ResponseEntity<OrganizationDTO> getOrganization(@PathVariable(name = "orgId") Long orgId) throws OrganizationServiceException {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<OrganizationDTO> getOrganization(@PathVariable(name = "id") Long id) throws OrganizationServiceException {
 
-        OrganizationDTO organizationDTO = organizationService.fetch(orgId);
+        OrganizationDTO organizationDTO = organizationService.fetch(id);
 
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{orgId}")
-    public ResponseEntity<OrganizationDTO> updateOrganization(@PathVariable(name = "orgId") Long orgId, @RequestBody @Valid OrganizationDTO update) throws OrganizationServiceException {
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<OrganizationDTO> updateOrganization(@PathVariable(name = "id") Long id, @RequestBody @Valid OrganizationDTO update) throws OrganizationServiceException {
 
-        OrganizationDTO organizationDTO = organizationService.modify(orgId, update);
+        OrganizationDTO organizationDTO = organizationService.modify(id, update);
 
         return new ResponseEntity<>(organizationDTO, HttpStatus.OK);
     }
