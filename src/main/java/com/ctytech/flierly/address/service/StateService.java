@@ -16,4 +16,8 @@ public interface StateService {
     StateDTO modify(Long id, StateDTO update) throws StateServiceException;
 
     void remove(Long id) throws StateServiceException;
+
+    Boolean existsByGstCodeAndCountryId(Integer gstCode, Long countryId) throws StateServiceException;
+
+    Boolean exitsByCodeAndCountryId(String code, Long countryId) throws StateServiceException;
 }
