@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostalIdentityRepository extends JpaRepository<PostalIdentity, Long> {
 
-    @Query("SELECT CASE WHEN count(PI) > 0 THEN true ELSE false END FROM PostalIdentity PI WHERE PI.city = :cityId AND PI.pinCode= :pinCode")
+    @Query("SELECT CASE WHEN count(PI) > 0 THEN true ELSE false END FROM PostalIdentity PI WHERE PI.city.id = :cityId AND PI.pinCode= :pinCode")
     boolean existsByCityIdAndPincode(@Param("cityId") Long cityId, @Param("pinCode") Integer pincode);
 }
