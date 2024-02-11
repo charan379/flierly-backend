@@ -27,7 +27,7 @@ import lombok.Setter;
  * </ul>
  * </p>
  */
-@Entity()
+@Entity
 @Table(name = "states", uniqueConstraints = {@UniqueConstraint(columnNames = {"code", "countryId"})})
 @SequenceGenerator(name = "state_id_generator", sequenceName = "state_id_seq", initialValue = 1000, allocationSize = 1)
 @Getter
@@ -51,9 +51,9 @@ public class State {
     @Column(columnDefinition = "boolean default false")
     private Boolean isUnionTerritory;
 
-    @Column(updatable = false)
     private Integer gstCode;
 
+    @NotNull(message = "{state.country.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "state_country_fkey"), updatable = false)
     private Country country;
