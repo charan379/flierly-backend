@@ -28,6 +28,6 @@ public class Country {
     private String name;
 
     @NotNull(message = "{country.dialingCode.absent}")
-    @Column(unique = true)
+    @Column(unique = true, updatable = false)
     private Integer dialingCode;
 }
