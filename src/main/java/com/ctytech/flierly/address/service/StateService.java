@@ -11,7 +11,7 @@ public interface StateService {
 
     StateDTO fetch(Long id) throws StateServiceException;
 
-    List<StateDTO> fetchByCountryId(Long id) throws StateServiceException;
+    List<StateDTO> fetchAllByCountryId(Long countryId) throws StateServiceException;
 
     StateDTO modify(Long id, StateDTO update) throws StateServiceException;
 
