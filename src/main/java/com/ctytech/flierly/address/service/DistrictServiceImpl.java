@@ -63,7 +63,7 @@ public class DistrictServiceImpl implements DistrictService {
 
         Integer newLandlineCode = update.getLandlineCode();
 
-        if (newLandlineCode != null) {
+        if (newLandlineCode != null && !newLandlineCode.equals(district.getLandlineCode())) {
             if (existsByLandlineCodeAndStateId(newLandlineCode, district.getState().getId()))
                 throw new DistrictServiceException("DistrictService.LANDLINE_CODE_ALREADY_EXISTS");
 
