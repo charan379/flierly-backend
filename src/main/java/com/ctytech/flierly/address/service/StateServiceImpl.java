@@ -73,6 +73,9 @@ public class StateServiceImpl implements StateService {
         if (update.getIsUnionTerritory() != null) state.setIsUnionTerritory(update.getIsUnionTerritory());
 
         if (gstCode != null && existingGstCode == null) {
+            if (existsByGstCodeAndCountryId(gstCode, state.getCountry().getId()))
+                throw new StateServiceException("StateService.GST_CODE_ALREADY_EXISTS");
+
             state.setGstCode(update.getGstCode());
         }
 
