@@ -54,7 +54,6 @@ public class State {
     // Only updatable if its null, once GstCode Persist it should not be updated.
     private Integer gstCode;
 
-    @NotNull(message = "{state.country.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "state_country_fkey"), updatable = false)
     private Country country;

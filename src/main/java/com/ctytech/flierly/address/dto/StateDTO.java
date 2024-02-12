@@ -26,7 +26,6 @@ public class StateDTO implements Serializable {
 
     private Integer gstCode;
 
-    @NotNull(message = "{state.country.absent}")
     private CountryDTO country;
 
 }
