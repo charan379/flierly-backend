@@ -7,12 +7,14 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/country")
+@Validated
 public class CountryController {
 
     @Autowired
@@ -49,13 +51,13 @@ public class CountryController {
     }
 
     @GetMapping(value = "/code-exists/{code}")
-    public ResponseEntity<Boolean> countryCodeExists(@PathVariable(name = "code") String code) throws CountryServiceException {
+    public ResponseEntity<Boolean> checkExistenceWithCode(@PathVariable(name = "code") String code) throws CountryServiceException {
         Boolean isExists = countryService.existsByCode(code.toLowerCase());
         return new ResponseEntity<>(isExists, HttpStatus.OK);
     }
 
     @GetMapping(value = "/dialing-code-exists/{dialingCode}")
-    public ResponseEntity<Boolean> countryDialingCodeExists(@PathVariable(name = "dialingCode") Integer dialingCode) throws CountryServiceException {
+    public ResponseEntity<Boolean> checkExistenceWithDialingCode(@PathVariable(name = "dialingCode") Integer dialingCode) throws CountryServiceException {
         Boolean isExists = countryService.existsByDialingCode(dialingCode);
         return new ResponseEntity<>(isExists, HttpStatus.OK);
     }
