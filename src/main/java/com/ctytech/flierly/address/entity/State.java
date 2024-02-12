@@ -51,6 +51,7 @@ public class State {
     @Column(columnDefinition = "boolean default false")
     private Boolean isUnionTerritory;
 
+    // Only updatable if its null, once GstCode Persist it should not be updated.
     private Integer gstCode;
 
     @NotNull(message = "{state.country.absent}")
