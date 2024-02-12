@@ -32,6 +32,12 @@ public class StateController {
         return new ResponseEntity<>(stateDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/code/{code}")
+    public ResponseEntity<StateDTO> getStateByCodeAndCountryId(@PathVariable(name = "code") String code, @RequestParam(name = "countryId") Long countryId) throws StateServiceException {
+        StateDTO stateDTO = stateService.fetch(code, countryId);
+        return new ResponseEntity<>(stateDTO, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<StateDTO>> getAllByCountryId(@RequestParam(name = "countryId") Long countryId) throws StateServiceException {
         List<StateDTO> stateDTOS = stateService.fetchAllByCountryId(countryId);

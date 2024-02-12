@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StateRepository extends JpaRepository<State, Long> {
@@ -19,4 +20,7 @@ public interface StateRepository extends JpaRepository<State, Long> {
 
     @Query("SELECT S FROM State S WHERE S.country.id= :countryId")
     List<State> findAllByCountryId(@Param("countryId") Long countryId);
+
+    @Query("SELECT S FROM State S WHERE S.code= :code AND S.country.id= :countryId")
+    Optional<State> findByCodeAndCountryId(@Param("code") String code, @Param("countryId") Long countryId);
 }
