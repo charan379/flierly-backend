@@ -34,7 +34,7 @@ public class StateController {
 
     @GetMapping(value = "/code/{code}")
     public ResponseEntity<StateDTO> getStateByCodeAndCountryId(@PathVariable(name = "code") String code, @RequestParam(name = "countryId") Long countryId) throws StateServiceException {
-        StateDTO stateDTO = stateService.fetch(code, countryId);
+        StateDTO stateDTO = stateService.fetch(code.toLowerCase(), countryId);
         return new ResponseEntity<>(stateDTO, HttpStatus.OK);
     }
 
@@ -52,13 +52,13 @@ public class StateController {
 
     @GetMapping(value = "/gst-code-exists/{gstCode}")
     public ResponseEntity<Boolean> checkExistenceWithGstCodeAndCountryId(@PathVariable(name = "gstCode") Integer gstCode, @RequestParam(name = "countryId") Long countryId) throws StateServiceException {
-        Boolean exists = stateService.existsByGstCodeAndCountryId(gstCode, countryId);
-        return new ResponseEntity<>(exists, HttpStatus.OK);
+        Boolean isExists = stateService.existsByGstCodeAndCountryId(gstCode, countryId);
+        return new ResponseEntity<>(isExists, HttpStatus.OK);
     }
 
     @GetMapping(value = "/code-exists/{code}")
     public ResponseEntity<Boolean> checkExistenceWithCodeAndCountryId(@PathVariable(name = "code") String code, @RequestParam(name = "countryId") Long countryId) throws StateServiceException {
-        Boolean exists = stateService.exitsByCodeAndCountryId(code, countryId);
-        return new ResponseEntity<>(exists, HttpStatus.OK);
+        Boolean isExists = stateService.exitsByCodeAndCountryId(code.toLowerCase(), countryId);
+        return new ResponseEntity<>(isExists, HttpStatus.OK);
     }
 }
