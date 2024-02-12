@@ -54,7 +54,20 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public StateDTO modify(Long id, StateDTO update) throws StateServiceException {
-        return null;
+        State state = stateRepository.findById(id).orElseThrow(() -> new StateServiceException("StateService.NOT_FOUND"));
+
+        Integer gstCode = update.getGstCode();
+        Integer existingGstCode = state.getGstCode();
+
+        if (!state.getName().equals(update.getName())) state.setName(update.getName());
+
+        if (update.getIsUnionTerritory() != null) state.setIsUnionTerritory(update.getIsUnionTerritory());
+
+        if (gstCode != null && existingGstCode == null) {
+            state.setGstCode(update.getGstCode());
+        }
+
+        return stateMapper.toDTO(stateRepository.save(state));
     }
 
     @Override
