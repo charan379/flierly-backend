@@ -38,6 +38,9 @@ public class StateServiceImpl implements StateService {
 
         State state = stateMapper.toEntity(stateDTO);
 
+        if (stateDTO.getIsUnionTerritory() != null) state.setIsUnionTerritory(stateDTO.getIsUnionTerritory());
+        else state.setIsUnionTerritory(false);
+
         return stateMapper.toDTO(stateRepository.save(state));
     }
 
