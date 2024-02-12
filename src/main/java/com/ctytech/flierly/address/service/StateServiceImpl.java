@@ -51,6 +51,12 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
+    public StateDTO fetch(String code, Long countryId) throws StateServiceException {
+        State state = stateRepository.findByCodeAndCountryId(code, countryId).orElseThrow(() -> new StateServiceException("StateService.NOT_FOUND"));
+        return stateMapper.toDTO(state);
+    }
+
+    @Override
     public List<StateDTO> fetchAllByCountryId(Long countryId) throws StateServiceException {
         return stateRepository.findAllByCountryId(countryId).stream().map(state -> stateMapper.toDTO(state)).toList();
     }
