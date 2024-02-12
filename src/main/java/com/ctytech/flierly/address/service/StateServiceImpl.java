@@ -48,8 +48,8 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public List<StateDTO> fetchByCountryId(Long id) throws StateServiceException {
-        return null;
+    public List<StateDTO> fetchAllByCountryId(Long countryId) throws StateServiceException {
+        return stateRepository.findAllByCountryId(countryId).stream().map(state -> stateMapper.toDTO(state)).toList();
     }
 
     @Override
