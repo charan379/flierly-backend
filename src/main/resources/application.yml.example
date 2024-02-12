@@ -19,3 +19,10 @@ server:
   port: <Value> # Application Port ex: 3111
   servlet:
     context-path: <Value> # Application starting path ex: /api
+
+# Logging
+
+logging:
+  level:
+    #    root: INFO
+    org.hibernate: DEBUG
