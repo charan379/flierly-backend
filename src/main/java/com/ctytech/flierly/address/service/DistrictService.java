@@ -19,7 +19,7 @@ public interface DistrictService {
 
     void remove(Long id) throws DistrictServiceException;
 
-    Boolean exitsByCodeAndStateId(String code, Long stateId);
+    Boolean existsByCodeAndStateId(String code, Long stateId);
 
     Boolean existsByLandlineCodeAndStateId(Integer landlineCode, Long stateId);
 }
