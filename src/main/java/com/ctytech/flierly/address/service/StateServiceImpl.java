@@ -23,14 +23,11 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public StateDTO save(StateDTO stateDTO) throws StateServiceException {
-        Long countryId = Optional.ofNullable(stateDTO.getCountry()).map(CountryDTO::getId).orElse(null);
-
-        if (countryId == null) throw new StateServiceException("StateService.COUNTRY_ID_ABSENT");
+        Long countryId = Optional.ofNullable(stateDTO.getCountry()).map(CountryDTO::getId).orElseThrow(() -> new StateServiceException("StateService.COUNTRY_ID_ABSENT"));
 
         Integer gstCode = stateDTO.getGstCode();
-        String stateCode = stateDTO.getCode();
 
-        if (exitsByCodeAndCountryId(stateCode, countryId))
+        if (exitsByCodeAndCountryId(stateDTO.getCode(), countryId))
             throw new StateServiceException("StateService.CODE_ALREADY_EXISTS");
 
         if (gstCode != null && existsByGstCodeAndCountryId(gstCode, countryId))
@@ -65,15 +62,15 @@ public class StateServiceImpl implements StateService {
     public StateDTO modify(Long id, StateDTO update) throws StateServiceException {
         State state = stateRepository.findById(id).orElseThrow(() -> new StateServiceException("StateService.NOT_FOUND"));
 
-        Integer gstCode = update.getGstCode();
+        Integer newGstCode = update.getGstCode();
         Integer existingGstCode = state.getGstCode();
 
         if (!state.getName().equals(update.getName())) state.setName(update.getName());
 
         if (update.getIsUnionTerritory() != null) state.setIsUnionTerritory(update.getIsUnionTerritory());
 
-        if (gstCode != null && existingGstCode == null) {
-            if (existsByGstCodeAndCountryId(gstCode, state.getCountry().getId()))
+        if (newGstCode != null && existingGstCode == null) {
+            if (existsByGstCodeAndCountryId(newGstCode, state.getCountry().getId()))
                 throw new StateServiceException("StateService.GST_CODE_ALREADY_EXISTS");
 
             state.setGstCode(update.getGstCode());
