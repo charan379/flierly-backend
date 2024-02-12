@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StateRepository extends JpaRepository<State, Long> {
 
@@ -14,4 +16,7 @@ public interface StateRepository extends JpaRepository<State, Long> {
 
     @Query("SELECT CASE WHEN count(S) > 0 THEN true ELSE false END FROM State S WHERE S.code= :code AND S.country.id= :countryId")
     Boolean existsByCodeAndCountryId(@Param("code") String code, @Param("countryId") Long countryId);
+
+    @Query("SELECT S FROM State S WHERE S.country.id= :countryId")
+    List<State> findAllByCountryId(@Param("countryId") Long countryId);
 }
