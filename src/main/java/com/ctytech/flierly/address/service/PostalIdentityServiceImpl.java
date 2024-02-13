@@ -64,7 +64,7 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
         Integer existingPincode = postalIdentity.getPinCode();
         Integer newPincode = update.getPinCode();
 
-        if (existingPincode == null) {
+        if (existingPincode == null && newPincode != null) {
             if (existsByCountryIdAndPincode(postalIdentity.getCountry().getId(), newPincode))
                 throw new PostalIdentityServiceException("PostalIdentity.PINCODE_AND_COUNTRY_EXISTS");
             postalIdentity.setPinCode(newPincode);
