@@ -21,5 +21,5 @@ public interface PostalIdentityService {
 
     Boolean existsByCountryIdAndPincode(Long countryId, Integer pincode);
 
-    Boolean isCityBelongsToCountry(Long cityId, Long countryId);
+    Boolean isCityBelongsToCountry(Long countryId, Long cityId);
 }
