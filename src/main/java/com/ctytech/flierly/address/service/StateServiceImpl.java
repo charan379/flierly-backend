@@ -27,10 +27,10 @@ public class StateServiceImpl implements StateService {
 
         Integer gstCode = stateDTO.getGstCode();
 
-        if (exitsByCodeAndCountryId(stateDTO.getCode(), countryId))
+        if (exitsByCountryIdAndCode(countryId, stateDTO.getCode()))
             throw new StateServiceException("StateService.CODE_ALREADY_EXISTS");
 
-        if (gstCode != null && existsByGstCodeAndCountryId(gstCode, countryId))
+        if (gstCode != null && existsByCountryIdAndGstCode(countryId, gstCode))
             throw new StateServiceException("StateService.GST_CODE_ALREADY_EXISTS");
 
         State state = stateMapper.toEntity(stateDTO);
@@ -48,8 +48,8 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public StateDTO fetch(String code, Long countryId) throws StateServiceException {
-        State state = stateRepository.findByCodeAndCountryId(code, countryId).orElseThrow(() -> new StateServiceException("StateService.NOT_FOUND"));
+    public StateDTO fetch(Long countryId, String code) throws StateServiceException {
+        State state = stateRepository.findByCountryIdAndCode(countryId, code).orElseThrow(() -> new StateServiceException("StateService.NOT_FOUND"));
         return stateMapper.toDTO(state);
     }
 
@@ -70,7 +70,7 @@ public class StateServiceImpl implements StateService {
         if (update.getIsUnionTerritory() != null) state.setIsUnionTerritory(update.getIsUnionTerritory());
 
         if (newGstCode != null && existingGstCode == null) {
-            if (existsByGstCodeAndCountryId(newGstCode, state.getCountry().getId()))
+            if (existsByCountryIdAndGstCode(state.getCountry().getId(), newGstCode))
                 throw new StateServiceException("StateService.GST_CODE_ALREADY_EXISTS");
 
             state.setGstCode(update.getGstCode());
@@ -85,12 +85,12 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public Boolean existsByGstCodeAndCountryId(Integer gstCode, Long countryId) throws StateServiceException {
-        return stateRepository.existsByGstCodeAndCountryId(gstCode, countryId);
+    public Boolean existsByCountryIdAndGstCode(Long countryId, Integer gstCode) throws StateServiceException {
+        return stateRepository.existsByCountryIdAndGstCode(countryId, gstCode);
     }
 
     @Override
-    public Boolean exitsByCodeAndCountryId(String code, Long countryId) throws StateServiceException {
-        return stateRepository.existsByCodeAndCountryId(code, countryId);
+    public Boolean exitsByCountryIdAndCode(Long countryId, String code) throws StateServiceException {
+        return stateRepository.existsByCountryIdAndCode(countryId, code);
     }
 }

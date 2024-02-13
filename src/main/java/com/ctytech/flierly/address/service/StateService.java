@@ -11,7 +11,7 @@ public interface StateService {
 
     StateDTO fetch(Long id) throws StateServiceException;
 
-    StateDTO fetch(String code, Long countryId) throws StateServiceException;
+    StateDTO fetch(Long countryId, String code) throws StateServiceException;
 
     List<StateDTO> fetchAllByCountryId(Long countryId) throws StateServiceException;
 
@@ -19,7 +19,7 @@ public interface StateService {
 
     void remove(Long id) throws StateServiceException;
 
-    Boolean existsByGstCodeAndCountryId(Integer gstCode, Long countryId) throws StateServiceException;
+    Boolean existsByCountryIdAndGstCode(Long countryId, Integer gstCode) throws StateServiceException;
 
-    Boolean exitsByCodeAndCountryId(String code, Long countryId) throws StateServiceException;
+    Boolean exitsByCountryIdAndCode(Long countryId, String code) throws StateServiceException;
 }
