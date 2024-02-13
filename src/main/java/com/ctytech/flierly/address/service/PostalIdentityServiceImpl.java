@@ -9,6 +9,7 @@ import com.ctytech.flierly.address.repository.PostalIdentityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service(value = "postalIdentityService")
@@ -27,8 +28,8 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
 
         Integer pinCode = postalIdentityDTO.getPinCode();
 
-        if (cityId != null && pinCode != null && existsByCityIdAndPincode(cityId, pinCode))
-            throw new PostalIdentityServiceException("PostalIdentity.PINCODE_AND_CITY_EXISTS");
+//        if (cityId != null && pinCode != null && existsByCityIdAndPincode(cityId, pinCode))
+//            throw new PostalIdentityServiceException("PostalIdentity.PINCODE_AND_CITY_EXISTS");
 
         PostalIdentity postalIdentity = postalIdentityRepository.save(postalIdentityMapper.toEntity(postalIdentityDTO));
 
@@ -38,8 +39,18 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
     @Override
     public PostalIdentityDTO fetch(Long id) throws PostalIdentityServiceException {
         PostalIdentity postalIdentity = postalIdentityRepository.findById(id).orElseThrow(() -> new PostalIdentityServiceException("PostalIdentity.NOT_FOUND"));
-
         return postalIdentityMapper.toDTO(postalIdentity);
+    }
+
+    @Override
+    public PostalIdentityDTO fetchByCountryIdAndPincode(Long countryId, Integer pincode) throws PostalIdentityServiceException {
+        PostalIdentity postalIdentity = postalIdentityRepository.fetchByCountryIdAndPincode(countryId, pincode).orElseThrow(() -> new PostalIdentityServiceException("PostalIdentity.NOT_FOUND"));
+        return postalIdentityMapper.toDTO(postalIdentity);
+    }
+
+    @Override
+    public List<PostalIdentityDTO> fetchAllByCityId(Long cityId) {
+        return postalIdentityRepository.fetchAllByCityId(cityId).stream().map(postalIdentity -> postalIdentityMapper.toDTO(postalIdentity)).toList();
     }
 
     @Override
@@ -60,8 +71,12 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
     }
 
     @Override
-    public Boolean existsByCityIdAndPincode(Long cityId, Integer pincode) throws PostalIdentityServiceException {
+    public Boolean existsByCountryIdAndPincode(Long countryId, Integer pincode) {
+        return postalIdentityRepository.exitsByCountryIdAndPincode(countryId, pincode);
+    }
 
-        return postalIdentityRepository.existsByCityIdAndPincode(cityId, pincode);
+    @Override
+    public Boolean isCityBelongsToCountry(Long countryId, Long cityId) {
+        return postalIdentityRepository.isCityBelongsToCountry(countryId, cityId);
     }
 }
