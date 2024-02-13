@@ -16,4 +16,6 @@ public class PostalIdentityDTO implements Serializable {
     private Integer pinCode;
 
     private CityDTO city;
+
+    private CountryDTO country;
 }
