@@ -18,9 +18,14 @@ import lombok.Setter;
  * </p>
  * <ul>
  *     <li>
- *         <p><b>idx_p_unique_gst</b></p>
+ *         <p><b>idx_p_unique_city_pincode</b></p>
  *         <p><b>Columns {"cityId", "pinCode"}</b></p>
  *         <p>Condition: If cityId, pinCode are not null</p>
+ *     </li>
+ *     <li>
+ *         <p><b>idx_p_unique_country_pincode</b></p>
+ *         <p><b>Columns {"countryId", "pinCode"}</b></p>
+ *         <p>Condition: If countryId, pinCode are not null</p>
  *     </li>
  * </ul>
  * </p>
@@ -42,4 +47,8 @@ public class PostalIdentity {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "cityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_city_fkey"))
     private City city;
+
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "countryId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "postal_identity_country_fkey"))
+    private Country country;
 }
