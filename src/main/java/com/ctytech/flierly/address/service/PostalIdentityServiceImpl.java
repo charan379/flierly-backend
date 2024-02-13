@@ -33,7 +33,7 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
             throw new PostalIdentityServiceException("PostalIdentityService.CITY_NOT_IN_COUNTRY");
 
         if (pinCode != null && existsByCountryIdAndPincode(countryId, pinCode))
-            throw new PostalIdentityServiceException("PostalIdentity.PINCODE_AND_COUNTRY_EXISTS");
+            throw new PostalIdentityServiceException("PostalIdentityService.PINCODE_AND_COUNTRY_EXISTS");
 
         PostalIdentity postalIdentity = postalIdentityRepository.save(postalIdentityMapper.toEntity(postalIdentityDTO));
 

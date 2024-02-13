@@ -32,7 +32,7 @@ public class PostalIdentityController {
         return new ResponseEntity<>(postalIdentityDTO, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/pincode/{pincode}}")
+    @GetMapping(value = "/pincode/{pincode}")
     public ResponseEntity<PostalIdentityDTO> getByCountryIdAndPincode(@PathVariable(name = "pincode") Integer pincode, @RequestParam(name = "countryId") Long countryId) throws PostalIdentityServiceException {
         PostalIdentityDTO postalIdentityDTO = postalIdentityService.fetchByCountryIdAndPincode(countryId, pincode);
         return new ResponseEntity<>(postalIdentityDTO, HttpStatus.OK);
