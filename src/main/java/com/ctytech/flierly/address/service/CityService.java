@@ -11,9 +11,14 @@ public interface CityService {
 
     CityDTO fetch(Long id) throws CityServiceException;
 
-    List<CityDTO> fetchAllByDistrictId(Long DistrictId) throws CityServiceException;
+    CityDTO fetch(String code, Long districtId) throws CityServiceException;
+
+    List<CityDTO> fetchAllByDistrictId(Long districtId);
 
     CityDTO modify(Long id, CityDTO update) throws CityServiceException;
 
     void remove(Long id) throws CityServiceException;
+
+    Boolean existsByCodeAndDistrictId(String code, Long districtId);
+
 }
