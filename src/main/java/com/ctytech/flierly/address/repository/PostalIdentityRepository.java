@@ -23,5 +23,5 @@ public interface PostalIdentityRepository extends JpaRepository<PostalIdentity, 
     Boolean exitsByCountryIdAndPincode(@Param("countryId") Long countryId, @Param("pincode") Integer pincode);
 
     @Query("SELECT CASE WHEN count(C) > 0 THEN true ELSE false END FROM City C WHERE C.id= :cityId AND C.district.state.country.id= :countryId")
-    Boolean isCityBelongsToCountry(@Param("cityId") Long cityId, @Param("countryId") Long countryId);
+    Boolean isCityBelongsToCountry(@Param("countryId") Long countryId, @Param("cityId") Long cityId);
 }
