@@ -3,10 +3,8 @@ package com.ctytech.flierly.address.service;
 import com.ctytech.flierly.address.dto.AreaDTO;
 import com.ctytech.flierly.address.dto.PostalIdentityDTO;
 import com.ctytech.flierly.address.entity.Area;
-import com.ctytech.flierly.address.entity.PostalIdentity;
 import com.ctytech.flierly.address.exception.AreaServiceException;
 import com.ctytech.flierly.address.mapper.AreaMapper;
-import com.ctytech.flierly.address.mapper.PostalIdentityMapper;
 import com.ctytech.flierly.address.repository.AreaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +21,13 @@ public class AreaServiceImpl implements AreaService {
     @Autowired
     private AreaMapper areaMapper;
 
-    @Autowired
-    private PostalIdentityMapper postalIdentityMapper;
-
     @Override
     public AreaDTO save(AreaDTO areaDTO) throws AreaServiceException {
+        Long pId = Optional.ofNullable(areaDTO.getPostalIdentity()).map(PostalIdentityDTO::getId).orElseThrow(() -> new AreaServiceException("AreaService.PID_ABSENT"));
+
+        if (existsByPostalIdAndName(pId, areaDTO.getName()))
+            throw new AreaServiceException("AreaService.ALREADY_EXISTS");
+
         Area newArea = areaMapper.toEntity(areaDTO);
         return areaMapper.toDTO(areaRepository.save(newArea));
     }
@@ -47,13 +47,10 @@ public class AreaServiceImpl implements AreaService {
     public AreaDTO modify(Long id, AreaDTO update) throws AreaServiceException {
         Area area = areaRepository.findById(id).orElseThrow(() -> new AreaServiceException("AreaService.NOT_FOUND"));
 
-        Long existingPostalId = Optional.ofNullable(area.getPostalIdentity()).map(PostalIdentity::getId).orElse(null);
-        Long newPostalId = Optional.ofNullable(update.getPostalIdentity()).map(PostalIdentityDTO::getId).orElse(null);
+        if (area.getName().equalsIgnoreCase(update.getName())) return areaMapper.toDTO(area);
 
-        if (existingPostalId == null && newPostalId != null)
-            area.setPostalIdentity(postalIdentityMapper.toEntity(update.getPostalIdentity()));
-
-        area.setName(update.getName());
+        if (existsByPostalIdAndName(area.getPostalIdentity().getId(), update.getName()))
+            throw new AreaServiceException("AreaService.ALREADY_EXISTS");
 
         return areaMapper.toDTO(areaRepository.save(area));
     }
@@ -61,5 +58,10 @@ public class AreaServiceImpl implements AreaService {
     @Override
     public void remove(Long id) throws AreaServiceException {
 
+    }
+
+    @Override
+    public Boolean existsByPostalIdAndName(Long pId, String name) {
+        return areaRepository.existsByPidAndName(pId, name);
     }
 }
