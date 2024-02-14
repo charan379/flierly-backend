@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "areas")
+@Table(name = "areas", uniqueConstraints = {@UniqueConstraint(columnNames = {"postalId", "name"})})
 @SequenceGenerator(name = "area_id_generator", sequenceName = "area_id_seq", initialValue = 1000, allocationSize = 1)
 @Getter
 @Setter
