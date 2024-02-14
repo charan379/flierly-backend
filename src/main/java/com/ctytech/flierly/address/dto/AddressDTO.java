@@ -1,7 +1,6 @@
 package com.ctytech.flierly.address.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,28 +22,24 @@ public class AddressDTO implements Serializable {
     @NotBlank(message = "{address.line1.absent}")
     private String line1;
 
+    @NotBlank(message = "{address.line2.absent}")
     private String line2;
 
     private String line3;
 
-    @NotNull(message = "{address.country.absent}")
     private CountryDTO country;
 
-    @NotNull(message = "{address.state.absent}")
     private StateDTO state;
 
-    @NotNull(message = "{address.district.absent}")
     private DistrictDTO district;
 
-    @NotNull(message = "{address.city.absent}")
     private CityDTO city;
 
-    @NotNull(message = "{address.postalIdentity.absent}")
     private PostalIdentityDTO postalIdentity;
 
-    @NotNull(message = "{address.area.absent}")
     private AreaDTO area;
 
+    @NotBlank(message = "{address.landmark.absent}")
     private String landMark;
 
     private BigDecimal latitude;
