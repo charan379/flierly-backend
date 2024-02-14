@@ -52,6 +52,8 @@ public class AreaServiceImpl implements AreaService {
         if (existsByPostalIdAndName(area.getPostalIdentity().getId(), update.getName()))
             throw new AreaServiceException("AreaService.ALREADY_EXISTS");
 
+        area.setName(update.getName());
+
         return areaMapper.toDTO(areaRepository.save(area));
     }
 
