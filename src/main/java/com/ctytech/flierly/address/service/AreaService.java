@@ -16,4 +16,6 @@ public interface AreaService {
     AreaDTO modify(Long id, AreaDTO update) throws AreaServiceException;
 
     void remove(Long id) throws AreaServiceException;
+
+    Boolean existsByPostalIdAndName(Long pId, String name);
 }
