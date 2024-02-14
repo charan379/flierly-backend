@@ -16,6 +16,17 @@ public class CityMapper {
         return modelMapper.map(city, CityDTO.class);
     }
 
+    public CityDTO toDTO(City city, boolean isMinimal) {
+        if (isMinimal) {
+            CityDTO cityDTO = new CityDTO();
+            cityDTO.setId(city.getId());
+            cityDTO.setCode(city.getCode());
+            cityDTO.setName(city.getName());
+            return cityDTO;
+        }
+        return modelMapper.map(city, CityDTO.class);
+    }
+
     public City toEntity(CityDTO cityDTO) {
         return modelMapper.map(cityDTO, City.class);
     }

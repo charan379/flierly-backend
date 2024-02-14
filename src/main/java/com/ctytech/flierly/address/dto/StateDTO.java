@@ -1,6 +1,10 @@
 package com.ctytech.flierly.address.dto;
 
-import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +30,7 @@ public class StateDTO implements Serializable {
 
     private Integer gstCode;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private CountryDTO country;
 
 }

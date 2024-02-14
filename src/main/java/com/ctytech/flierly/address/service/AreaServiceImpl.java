@@ -29,7 +29,7 @@ public class AreaServiceImpl implements AreaService {
             throw new AreaServiceException("AreaService.ALREADY_EXISTS");
 
         Area newArea = areaMapper.toEntity(areaDTO);
-        return areaMapper.toDTO(areaRepository.save(newArea));
+        return areaMapper.toDTO(areaRepository.save(newArea), true);
     }
 
     @Override
@@ -40,21 +40,21 @@ public class AreaServiceImpl implements AreaService {
 
     @Override
     public List<AreaDTO> fetchAllByPI(Long postalIdentityId) {
-        return areaRepository.findAllByPostalIdentityId(postalIdentityId).stream().map((area) -> areaMapper.toDTOWithoutPI(area)).toList();
+        return areaRepository.findAllByPostalIdentityId(postalIdentityId).stream().map((area) -> areaMapper.toDTO(area, true)).toList();
     }
 
     @Override
     public AreaDTO modify(Long id, AreaDTO update) throws AreaServiceException {
         Area area = areaRepository.findById(id).orElseThrow(() -> new AreaServiceException("AreaService.NOT_FOUND"));
 
-        if (area.getName().equalsIgnoreCase(update.getName())) return areaMapper.toDTO(area);
+        if (area.getName().equalsIgnoreCase(update.getName())) return areaMapper.toDTO(area, true);
 
         if (existsByPostalIdAndName(area.getPostalIdentity().getId(), update.getName()))
             throw new AreaServiceException("AreaService.ALREADY_EXISTS");
 
         area.setName(update.getName());
 
-        return areaMapper.toDTO(areaRepository.save(area));
+        return areaMapper.toDTO(areaRepository.save(area), true);
     }
 
     @Override

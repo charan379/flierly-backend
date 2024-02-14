@@ -37,7 +37,7 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
 
         PostalIdentity postalIdentity = postalIdentityRepository.save(postalIdentityMapper.toEntity(postalIdentityDTO));
 
-        return postalIdentityMapper.toDTO(postalIdentity);
+        return postalIdentityMapper.toDTO(postalIdentity, true);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
 
     @Override
     public List<PostalIdentityDTO> fetchAllByCityId(Long cityId) {
-        return postalIdentityRepository.fetchAllByCityId(cityId).stream().map(postalIdentity -> postalIdentityMapper.toDTO(postalIdentity)).toList();
+        return postalIdentityRepository.fetchAllByCityId(cityId).stream().map(postalIdentity -> postalIdentityMapper.toDTO(postalIdentity, true)).toList();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PostalIdentityServiceImpl implements PostalIdentityService {
             postalIdentity.setPinCode(newPincode);
         }
 
-        return postalIdentityMapper.toDTO(postalIdentityRepository.save(postalIdentity));
+        return postalIdentityMapper.toDTO(postalIdentityRepository.save(postalIdentity), true);
     }
 
     @Override

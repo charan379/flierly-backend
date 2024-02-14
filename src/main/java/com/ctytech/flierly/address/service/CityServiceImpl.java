@@ -30,7 +30,7 @@ public class CityServiceImpl implements CityService {
 
         City city = cityMapper.toEntity(cityDTO);
 
-        return cityMapper.toDTO(cityRepository.save(city));
+        return cityMapper.toDTO(cityRepository.save(city), true);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class CityServiceImpl implements CityService {
     @Override
     public CityDTO fetch(String code, Long districtId) throws CityServiceException {
         City city = cityRepository.findByCodeAndDistrictId(code, districtId).orElseThrow(() -> new CityServiceException("CityService.NOT_FOUND"));
-        return cityMapper.toDTO(city);
+        return cityMapper.toDTO(city, true);
     }
 
     @Override
     public List<CityDTO> fetchAllByDistrictId(Long districtId) {
-        return cityRepository.findAllByDistrictId(districtId).stream().map(city -> cityMapper.toDTO(city)).toList();
+        return cityRepository.findAllByDistrictId(districtId).stream().map(city -> cityMapper.toDTO(city, true)).toList();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class CityServiceImpl implements CityService {
 
         city.setName(update.getName());
 
-        return cityMapper.toDTO(cityRepository.save(city));
+        return cityMapper.toDTO(cityRepository.save(city), true);
     }
 
     @Override

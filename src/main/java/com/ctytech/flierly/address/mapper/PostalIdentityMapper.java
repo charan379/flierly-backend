@@ -16,6 +16,16 @@ public class PostalIdentityMapper {
         return modelMapper.map(postalIdentity, PostalIdentityDTO.class);
     }
 
+    public PostalIdentityDTO toDTO(PostalIdentity postalIdentity, boolean isMinimal) {
+        if (isMinimal) {
+            PostalIdentityDTO dto = new PostalIdentityDTO();
+            dto.setId(postalIdentity.getId());
+            dto.setPinCode(postalIdentity.getPinCode());
+            return dto;
+        }
+        return modelMapper.map(postalIdentity, PostalIdentityDTO.class);
+    }
+
     public PostalIdentity toEntity(PostalIdentityDTO postalIdentityDTO) {
         return modelMapper.map(postalIdentityDTO, PostalIdentity.class);
     }

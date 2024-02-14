@@ -1,5 +1,6 @@
 package com.ctytech.flierly.address.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -24,5 +25,6 @@ public class CityDTO implements Serializable {
     @NotBlank(message = "{city.name.absent}")
     private String name;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private DistrictDTO district;
 }

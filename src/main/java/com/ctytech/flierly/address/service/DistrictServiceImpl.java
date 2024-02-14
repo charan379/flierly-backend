@@ -35,7 +35,7 @@ public class DistrictServiceImpl implements DistrictService {
 
         District district = districtMapper.toEntity(districtDTO);
 
-        return districtMapper.toDTO(districtRepository.save(district));
+        return districtMapper.toDTO(districtRepository.save(district), true);
     }
 
     @Override
@@ -47,12 +47,12 @@ public class DistrictServiceImpl implements DistrictService {
     @Override
     public DistrictDTO fetch(String code, Long stateId) throws DistrictServiceException {
         District district = districtRepository.findByCodeAndStateId(code, stateId).orElseThrow(() -> new DistrictServiceException("DistrictService.NOT_FOUND"));
-        return districtMapper.toDTO(district);
+        return districtMapper.toDTO(district, true);
     }
 
     @Override
     public List<DistrictDTO> fetchAllByStateId(Long stateId) throws DistrictServiceException {
-        return districtRepository.findAllByStateId(stateId).stream().map(district -> districtMapper.toDTO(district)).toList();
+        return districtRepository.findAllByStateId(stateId).stream().map(district -> districtMapper.toDTO(district, true)).toList();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class DistrictServiceImpl implements DistrictService {
             district.setLandlineCode(update.getLandlineCode());
         }
 
-        return districtMapper.toDTO(districtRepository.save(district));
+        return districtMapper.toDTO(districtRepository.save(district), true);
     }
 
     @Override
