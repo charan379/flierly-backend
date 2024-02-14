@@ -38,6 +38,12 @@ public class AreaController {
         return new ResponseEntity<>(areaDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/exists")
+    public ResponseEntity<Boolean> checkExistenceWithNameAndPid(@RequestParam(name = "postalId") Long postalId, @RequestParam(name = "name") String name) {
+        Boolean isExists = areaService.existsByPostalIdAndName(postalId, name);
+        return new ResponseEntity<>(isExists, HttpStatus.OK);
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<AreaDTO> updateAreaById(@PathVariable(name = "id") Long id, @RequestBody @Valid AreaDTO update) throws AreaServiceException {
         AreaDTO areaDTO = areaService.modify(id, update);
