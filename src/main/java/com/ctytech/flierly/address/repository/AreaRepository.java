@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Long> {
 
-    @Query(value = "SELECT * FROM areas A WHERE A.postal_id= :pId", nativeQuery = true)
+    @Query("SELECT A FROM Area A WHERE A.postalIdentity.id= :pId")
     List<Area> findAllByPostalIdentityId(@Param("pId") Long pId);
 
-    @Query(value = "SELECT CASE WHEN count(A) > 0 THEN true ELSE false END FROM areas A WHERE A.postal_id= :pId AND A.name ILIKE :name", nativeQuery = true)
+    @Query("SELECT CASE WHEN count(A) > 0 THEN true ELSE false END FROM Area A WHERE A.postalIdentity.id= :pId AND A.name ILIKE :name")
     Boolean existsByPidAndName(@Param("pId") Long pId, @Param("name") String name);
 }

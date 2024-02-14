@@ -39,8 +39,8 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public List<AreaDTO> fetchAllByPI(Long postalIdentityId) throws AreaServiceException {
-        return areaRepository.findAllByPostalIdentityId(postalIdentityId).stream().map((area) -> areaMapper.toDTO(area)).toList();
+    public List<AreaDTO> fetchAllByPI(Long postalIdentityId) {
+        return areaRepository.findAllByPostalIdentityId(postalIdentityId).stream().map((area) -> areaMapper.toDTOWithoutPI(area)).toList();
     }
 
     @Override

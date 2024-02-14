@@ -1,5 +1,6 @@
 package com.ctytech.flierly.address.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,5 +18,6 @@ public class AreaDTO implements Serializable {
     @NotBlank(message = "{area.name.absent}")
     private String name;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private PostalIdentityDTO postalIdentity;
 }
