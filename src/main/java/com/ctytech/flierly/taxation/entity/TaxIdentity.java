@@ -1,14 +1,14 @@
 package com.ctytech.flierly.taxation.entity;
 
 import com.ctytech.flierly.address.entity.Address;
-import com.ctytech.flierly.organization.entity.Branch;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -52,7 +52,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @Table(name = "taxIdentities")
 @SequenceGenerator(name = "tax_identity_id_generator", sequenceName = "tax_identity_id_seq", initialValue = 1000, allocationSize = 1)
-public class TaxIdentity implements Serializable {
+public class TaxIdentity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tax_identity_id_generator")
@@ -61,11 +61,9 @@ public class TaxIdentity implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private Boolean isActive;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_branch_fkey"), updatable = false)
-    private Branch branch;
-
-    @Column(length = 55, updatable = false)
+    @Size(min = 15, max = 15, message = "{taxIdentity.gst.invalid}")
+    @Pattern(regexp = "^[0-9a-z]+$", message = "{gst.pattern.invalid}")
+    @Column(length = 55)
     private String gst;
 
     @PastOrPresent(message = "{taxIdentity.gstRegDate.invalid}")
@@ -78,6 +76,8 @@ public class TaxIdentity implements Serializable {
     @JoinColumn(name = "gstRegistrationAddress", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_gst_reg_address_fkey"))
     private Address gstRegistrationAddress;
 
+    @Size(min = 10, max = 10, message = "{taxIdentity.pan.invalid}")
+    @Pattern(regexp = "^[0-9a-z]+$", message = "{pan.pattern.invalid}")
     @Column(length = 30)
     private String pan;
 
