@@ -25,6 +25,7 @@ public class AddressMapper {
     private AreaMapper areaMapper;
 
     public AddressDTO toDTO(Address address) {
+        if (address == null) return null;
         AddressDTO dto = new AddressDTO();
         dto.setId(address.getId());
         dto.setIsActive(address.getIsActive());

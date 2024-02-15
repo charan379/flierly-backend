@@ -13,10 +13,12 @@ public class StateMapper {
     private ModelMapper modelMapper;
 
     public StateDTO toDTO(State state) {
+        if (state == null) return null;
         return modelMapper.map(state, StateDTO.class);
     }
 
     public StateDTO toDTO(State state, boolean isMinimal) {
+        if (state == null) return null;
         if (isMinimal) {
             StateDTO stateDTO = new StateDTO();
             stateDTO.setId(state.getId());

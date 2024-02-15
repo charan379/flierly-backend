@@ -13,10 +13,12 @@ public class DistrictMapper {
     private ModelMapper modelMapper;
 
     public DistrictDTO toDTO(District district) {
+        if (district == null) return null;
         return modelMapper.map(district, DistrictDTO.class);
     }
 
     public DistrictDTO toDTO(District district, boolean isMinimal) {
+        if (district == null) return null;
         if (isMinimal) {
             DistrictDTO districtDTO = new DistrictDTO();
             districtDTO.setId(district.getId());

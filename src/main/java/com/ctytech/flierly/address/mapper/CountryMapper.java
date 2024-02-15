@@ -13,6 +13,7 @@ public class CountryMapper {
     private ModelMapper modelMapper;
 
     public CountryDTO toDTO(Country country) {
+        if (country == null) return null;
         return modelMapper.map(country, CountryDTO.class);
     }
 

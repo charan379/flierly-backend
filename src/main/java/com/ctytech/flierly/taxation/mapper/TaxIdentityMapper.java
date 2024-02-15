@@ -17,6 +17,7 @@ public class TaxIdentityMapper {
     private AddressMapper addressMapper;
 
     public TaxIdentityDTO toDTO(TaxIdentity taxIdentity) {
+        if (taxIdentity == null) return null;
         TaxIdentityDTO dto = new TaxIdentityDTO();
         dto.setId(taxIdentity.getId());
         dto.setIsActive(taxIdentity.getIsActive());

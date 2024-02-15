@@ -13,10 +13,12 @@ public class AreaMapper {
     private ModelMapper modelMapper;
 
     public AreaDTO toDTO(Area area) {
+        if (area == null) return null;
         return modelMapper.map(area, AreaDTO.class);
     }
 
     public AreaDTO toDTO(Area area, boolean isMinimal) {
+        if (area == null) return null;
         if (isMinimal) {
             AreaDTO areaDTO = new AreaDTO();
             areaDTO.setId(area.getId());

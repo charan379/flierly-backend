@@ -13,10 +13,12 @@ public class PostalIdentityMapper {
     private ModelMapper modelMapper;
 
     public PostalIdentityDTO toDTO(PostalIdentity postalIdentity) {
+        if (postalIdentity == null) return null;
         return modelMapper.map(postalIdentity, PostalIdentityDTO.class);
     }
 
     public PostalIdentityDTO toDTO(PostalIdentity postalIdentity, boolean isMinimal) {
+        if (postalIdentity == null) return null;
         if (isMinimal) {
             PostalIdentityDTO dto = new PostalIdentityDTO();
             dto.setId(postalIdentity.getId());

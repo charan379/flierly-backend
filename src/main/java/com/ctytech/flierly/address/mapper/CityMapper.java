@@ -13,10 +13,12 @@ public class CityMapper {
     private ModelMapper modelMapper;
 
     public CityDTO toDTO(City city) {
+        if (city == null) return null;
         return modelMapper.map(city, CityDTO.class);
     }
 
     public CityDTO toDTO(City city, boolean isMinimal) {
+        if (city == null) return null;
         if (isMinimal) {
             CityDTO cityDTO = new CityDTO();
             cityDTO.setId(city.getId());
