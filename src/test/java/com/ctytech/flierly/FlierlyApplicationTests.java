@@ -15,34 +15,34 @@ class FlierlyApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
-	@Test
-	@DisplayName("Simple Test : UOM")
-	void simpleTest() {
-		BigDecimal qty = BigDecimal.valueOf(105);
-
-		String fromUom = "Pack Of 3";
-
-		String toUom = "Each";
-
-		BigDecimal conversionFactor = BigDecimal.valueOf(0.3333333330);
-
-		BigDecimal qtyCon = qty.multiply(conversionFactor, new MathContext(10, RoundingMode.HALF_EVEN));
-
-		System.out.printf("This converted qty to packs is : %f", qtyCon.stripTrailingZeros());
-
-	}
-
-	@Test
-	@DisplayName("Simple Test: Exception")
-	void simpleTest2() {
-
-		try {
-			throw new UomServiceException("Some error happened !");
-		} catch (UomServiceException e) {
-			System.out.println(e.getClass().getName());
-		}
-	}
+//
+//	@Test
+//	@DisplayName("Simple Test : UOM")
+//	void simpleTest() {
+//		BigDecimal qty = BigDecimal.valueOf(105);
+//
+//		String fromUom = "Pack Of 3";
+//
+//		String toUom = "Each";
+//
+//		BigDecimal conversionFactor = BigDecimal.valueOf(0.3333333330);
+//
+//		BigDecimal qtyCon = qty.multiply(conversionFactor, new MathContext(10, RoundingMode.HALF_EVEN));
+//
+//		System.out.printf("This converted qty to packs is : %f", qtyCon.stripTrailingZeros());
+//
+//	}
+//
+//	@Test
+//	@DisplayName("Simple Test: Exception")
+//	void simpleTest2() {
+//
+//		try {
+//			throw new UomServiceException("Some error happened !");
+//		} catch (UomServiceException e) {
+//			System.out.println(e.getClass().getName());
+//		}
+//	}
 
 
 }
