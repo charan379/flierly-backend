@@ -1,5 +1,6 @@
 package com.ctytech.flierly.taxation.service;
 
+import com.ctytech.flierly.address.exception.AddressServiceException;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
 import com.ctytech.flierly.taxation.exception.TaxIdentityException;
 
@@ -12,6 +13,8 @@ public interface TaxIdentityService {
     TaxIdentityDTO fetchByGstNumber(String gstNumber) throws TaxIdentityException;
 
     TaxIdentityDTO fetchByPanNumber(String panNumber) throws TaxIdentityException;
+
+    TaxIdentityDTO modify(Long id, TaxIdentityDTO update) throws TaxIdentityException;
 
     Boolean existsByGst(String gstNumber);
 

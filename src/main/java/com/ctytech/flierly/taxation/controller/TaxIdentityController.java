@@ -51,4 +51,10 @@ public class TaxIdentityController {
         return new ResponseEntity<>(isExists, HttpStatus.OK);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<TaxIdentityDTO> updateById(@PathVariable(name = "id") Long id, @RequestBody @Valid TaxIdentityDTO update) throws TaxIdentityException {
+        TaxIdentityDTO taxIdentityDTO = taxIdentityService.modify(id, update);
+        return new ResponseEntity<>(taxIdentityDTO, HttpStatus.OK);
+    }
+
 }
