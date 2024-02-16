@@ -28,6 +28,21 @@ public class BranchMapper {
         return modelMapper.map(branch, BranchDTO.class);
     }
 
+    public BranchDTO toDTO(Branch branch, boolean isMinimal) {
+        if (branch == null) return null;
+        if (isMinimal) {
+            BranchDTO dto = new BranchDTO();
+            dto.setId(branch.getId());
+            dto.setName(branch.getName());
+            dto.setIsActive(branch.getIsActive());
+            dto.setPhone(branch.getPhone());
+            dto.setAlternatePhone(branch.getAlternatePhone());
+            dto.setEmail(branch.getEmail());
+            return dto;
+        }
+        return modelMapper.map(branch, BranchDTO.class);
+    }
+
     public Branch toEntity(BranchDTO branchDTO) {
         return modelMapper.map(branchDTO, Branch.class);
     }
