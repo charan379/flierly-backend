@@ -3,7 +3,6 @@ package com.ctytech.flierly.taxation.service;
 import com.ctytech.flierly.address.dto.AddressDTO;
 import com.ctytech.flierly.address.entity.Address;
 import com.ctytech.flierly.address.exception.AddressServiceException;
-import com.ctytech.flierly.address.mapper.AddressMapper;
 import com.ctytech.flierly.address.service.AddressService;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
@@ -27,9 +26,6 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
 
     @Autowired
     private AddressService addressService;
-
-    @Autowired
-    private AddressMapper addressMapper;
 
     @Override
     public TaxIdentityDTO save(TaxIdentityDTO taxIdentityDTO) throws TaxIdentityException {
@@ -85,7 +81,7 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
         Long newGstAddressId = Optional.ofNullable(update.getGstRegistrationAddress()).map(AddressDTO::getId).orElse(null);
         if (!Objects.equals(newGstAddressId, currentGstAddressId)) if (newGstAddressId != null) {
             try {
-                taxIdentity.setGstRegistrationAddress(addressMapper.toEntity(addressService.fetch(newGstAddressId)));
+                taxIdentity.setGstRegistrationAddress(taxIdentityMapper.getAddressMapper().toEntity(addressService.fetch(newGstAddressId)));
             } catch (AddressServiceException e) {
                 throw new TaxIdentityException(e.getMessage());
             }

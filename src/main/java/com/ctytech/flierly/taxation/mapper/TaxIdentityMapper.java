@@ -3,6 +3,7 @@ package com.ctytech.flierly.taxation.mapper;
 import com.ctytech.flierly.address.mapper.AddressMapper;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
+import lombok.Getter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ public class TaxIdentityMapper {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Getter
     @Autowired
     private AddressMapper addressMapper;
 
