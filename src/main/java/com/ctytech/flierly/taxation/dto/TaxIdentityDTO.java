@@ -1,6 +1,7 @@
 package com.ctytech.flierly.taxation.dto;
 
 import com.ctytech.flierly.address.dto.AddressDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,7 @@ public class TaxIdentityDTO implements Serializable {
 
     private Boolean gstVerified;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private AddressDTO gstRegistrationAddress;
 
     @Size(min = 10, max = 10, message = "{taxIdentity.pan.invalid}")
