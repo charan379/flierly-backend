@@ -90,7 +90,12 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
             }
         }
         // Set PAN if not present and provided
-        if (taxIdentity.getPan() == null && update.getPan() != null) taxIdentity.setPan(update.getPan());
+        if (taxIdentity.getPan() == null && update.getPan() != null) {
+            // Check if provided pan already exists
+            if (existsByPan(update.getPan())) throw new TaxIdentityException("TaxIdentityService.PAN_ALREADY_EXISTS");
+            // if not exists then do update
+            taxIdentity.setPan(update.getPan());
+        }
         // Update PAN verification status
         taxIdentity.setPanVerified(Objects.requireNonNullElse(update.getPanVerified(), taxIdentity.getPanVerified()));
         // Save and return DTO
