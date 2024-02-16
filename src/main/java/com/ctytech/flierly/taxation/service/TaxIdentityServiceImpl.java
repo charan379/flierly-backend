@@ -70,7 +70,12 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
         // Set isActive if provided, otherwise keep the current value
         taxIdentity.setIsActive(Objects.requireNonNullElse(update.getIsActive(), taxIdentity.getIsActive()));
         // Set GST if not present and provided
-        if (taxIdentity.getGst() == null && update.getGst() != null) taxIdentity.setGst(update.getGst());
+        if (taxIdentity.getGst() == null && update.getGst() != null) {
+            // Check if provided gst already exists
+            if (existsByGst(update.getGst())) throw new TaxIdentityException("TaxIdentityService.GST_ALREADY_EXISTS");
+            // If not exits then do update
+            taxIdentity.setGst(update.getGst());
+        }
         // Update GST related fields
         taxIdentity.setGstVerified(Objects.requireNonNullElse(update.getGstVerified(), taxIdentity.getGstVerified()));
         taxIdentity.setGstRegistrationDate(Objects.requireNonNullElse(update.getGstRegistrationDate(), taxIdentity.getGstRegistrationDate()));
