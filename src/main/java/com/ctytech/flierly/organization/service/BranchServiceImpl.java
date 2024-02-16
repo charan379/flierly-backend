@@ -83,7 +83,7 @@ public class BranchServiceImpl implements BranchService {
             // If everything is ok then update new email address
             branch.setEmail(update.getEmail());
         }
-
+        branch.setAlternatePhone(update.getAlternatePhone());
         return branchMapper.toDTO(branchRepository.save(branch));
     }
 

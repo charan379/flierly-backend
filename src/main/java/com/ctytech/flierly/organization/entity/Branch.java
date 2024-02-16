@@ -30,8 +30,8 @@ public class Branch implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private Boolean isActive;
 
-    @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_address_fkey"), updatable = false)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_address_fkey"))
     private Address address;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

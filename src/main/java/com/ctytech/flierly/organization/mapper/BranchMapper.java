@@ -25,7 +25,16 @@ public class BranchMapper {
 
     public BranchDTO toDTO(Branch branch) {
         if (branch == null) return null;
-        return modelMapper.map(branch, BranchDTO.class);
+        BranchDTO dto = new BranchDTO();
+        dto.setId(branch.getId());
+        dto.setName(branch.getName());
+        dto.setIsActive(branch.getIsActive());
+        dto.setPhone(branch.getPhone());
+        dto.setAlternatePhone(branch.getAlternatePhone());
+        dto.setEmail(branch.getEmail());
+        dto.setAddress(addressMapper.toDTO(branch.getAddress()));
+        dto.setTaxIdentity(taxIdentityMapper.toDTO(branch.getTaxIdentity()));
+        return dto;
     }
 
     public BranchDTO toDTO(Branch branch, boolean isMinimal) {
@@ -40,7 +49,7 @@ public class BranchMapper {
             dto.setEmail(branch.getEmail());
             return dto;
         }
-        return modelMapper.map(branch, BranchDTO.class);
+        return toDTO(branch);
     }
 
     public Branch toEntity(BranchDTO branchDTO) {

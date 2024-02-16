@@ -55,7 +55,7 @@ public class BranchController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<BranchDTO> updateById(@PathVariable(name = "/id") Long id, @RequestBody @Validated BranchDTO update) throws BranchServiceException {
+    public ResponseEntity<BranchDTO> updateById(@PathVariable(name = "id") Long id, @RequestBody @Validated BranchDTO update) throws BranchServiceException {
         BranchDTO branchDTO = branchService.modify(id, update);
         return new ResponseEntity<>(branchDTO, HttpStatus.OK);
     }
