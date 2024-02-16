@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,12 +30,10 @@ public class Branch implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private Boolean isActive;
 
-    @NotNull(message = "{branch.address.absent")
     @OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_address_fkey"), updatable = false)
     private Address address;
 
-    @NotNull(message = "{branch.taxId.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinColumn(name = "taxIdentityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_tax_identity_fkey"))
     private TaxIdentity taxIdentity;
@@ -54,5 +51,4 @@ public class Branch implements Serializable {
     @NotBlank(message = "{branch.email.absent}")
     @Column(unique = true, nullable = false)
     private String email;
-
 }
