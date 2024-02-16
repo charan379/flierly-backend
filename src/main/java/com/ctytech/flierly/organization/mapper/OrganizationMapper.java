@@ -13,6 +13,7 @@ public class OrganizationMapper {
     private ModelMapper modelMapper;
 
     public OrganizationDTO toDTO(Organization organization) {
+        if (organization == null) return null;
         return modelMapper.map(organization, OrganizationDTO.class);
     }
 
