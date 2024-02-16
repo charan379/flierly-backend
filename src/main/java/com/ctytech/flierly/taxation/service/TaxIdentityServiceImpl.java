@@ -33,11 +33,12 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
 
     @Override
     public TaxIdentityDTO save(TaxIdentityDTO taxIdentityDTO) throws TaxIdentityException {
+        // Set isActive to true if not provided
         if (taxIdentityDTO.getIsActive() == null) taxIdentityDTO.setIsActive(true);
-
+        // Check if provided gst already exists
         if (taxIdentityDTO.getGst() != null && existsByGst(taxIdentityDTO.getGst()))
             throw new TaxIdentityException("TaxIdentityService.GST_ALREADY_EXISTS");
-
+        // Check if provided pan already exists
         if (taxIdentityDTO.getPan() != null && existsByPan(taxIdentityDTO.getPan()))
             throw new TaxIdentityException("TaxIdentityService.PAN_ALREADY_EXISTS");
 
