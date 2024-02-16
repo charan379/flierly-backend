@@ -2,6 +2,7 @@ package com.ctytech.flierly.organization.dto;
 
 import com.ctytech.flierly.address.dto.AddressDTO;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -19,8 +20,10 @@ public class BranchDTO implements Serializable {
 
     private Boolean isActive;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private AddressDTO address;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private TaxIdentityDTO taxIdentity;
 
     @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
