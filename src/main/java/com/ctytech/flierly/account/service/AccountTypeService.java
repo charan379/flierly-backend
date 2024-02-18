@@ -1,9 +1,11 @@
 package com.ctytech.flierly.account.service;
 
+import com.ctytech.flierly.account.dto.AccountSubtypeDTO;
 import com.ctytech.flierly.account.dto.AccountTypeDTO;
 import com.ctytech.flierly.account.exception.AccountServiceException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AccountTypeService {
 
@@ -14,6 +16,8 @@ public interface AccountTypeService {
     List<AccountTypeDTO> fetchAll();
 
     AccountTypeDTO modify(Long id, AccountTypeDTO update) throws AccountServiceException;
+
+    AccountTypeDTO modifySubtypes(Long id, Set<AccountSubtypeDTO> subtypes) throws AccountServiceException;
 
     Boolean existsByName(String name);
 }
