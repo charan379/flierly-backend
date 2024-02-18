@@ -19,8 +19,8 @@ public class AccountSubtype {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_subtype_id_generator")
     private Long id;
 
-    @NotBlank(message = "account.subtype.name.absent")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "account.subtype.name.invalid")
+    @NotBlank(message = "{account.subtype.name.absent}")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "{account.subtype.name.invalid}")
     @Column(unique = true, nullable = false)
     private String name;
 

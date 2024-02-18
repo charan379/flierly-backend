@@ -13,8 +13,8 @@ public class AccountTypeDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "account.type.name.absent")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "account.type.name.invalid")
+    @NotBlank(message = "{account.type.name.absent}")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "{account.type.name.invalid}")
     private String name;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -22,8 +22,8 @@ public class AccountType {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_type_id_generator")
     private Long id;
 
-    @NotBlank(message = "account.type.name.absent")
-    @Pattern(regexp = "^[a-z0-9_]+$", message = "account.type.name.invalid")
+    @NotBlank(message = "{account.type.name.absent}")
+    @Pattern(regexp = "^[a-z0-9_]+$", message = "{account.type.name.invalid}")
     @Column(unique = true, nullable = false)
     private String name;
 

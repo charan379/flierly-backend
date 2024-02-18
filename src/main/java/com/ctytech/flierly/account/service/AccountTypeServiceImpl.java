@@ -49,7 +49,7 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     public AccountTypeDTO modify(Long id, AccountTypeDTO update) throws AccountServiceException {
         AccountType accountType = accountTypeRepository.findById(id).orElseThrow(() -> new AccountServiceException("AccountType.NOT_FOUND"));
         // Check if new name and old name are different, if same then no need to do nay update.
-        if (!accountType.getName().equalsIgnoreCase(update.getName())) return update;
+        if (accountType.getName().equalsIgnoreCase(update.getName())) return update;
         // Check if new name already exists
         if (existsByName(update.getName())) throw new AccountServiceException("AccountType.NAME_ALREADY_EXISTS");
         // Do update
