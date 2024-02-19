@@ -1,5 +1,6 @@
 package com.ctytech.flierly.account.entity;
 
+import com.ctytech.flierly.address.entity.Address;
 import com.ctytech.flierly.contact.enitity.Contact;
 import com.ctytech.flierly.organization.entity.Branch;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
@@ -15,7 +16,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
-@Getter @Setter @EqualsAndHashCode
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Account implements Serializable {
 
     @Id
@@ -28,6 +31,7 @@ public class Account implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private Boolean isKey;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_branch_fkey"), updatable = false)
     private Branch branch;
@@ -47,19 +51,15 @@ public class Account implements Serializable {
     private TaxIdentity taxIdentity;
 
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinTable(name = "accountContacts", joinColumns = {
-            @JoinColumn(name = "accountId", referencedColumnName = "id",foreignKey = @ForeignKey(name = "account_contacts_account_fkey"))
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "contactId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_contacts_contact_fkey"))
-    })
+    @JoinTable(name = "accountContacts", joinColumns = {@JoinColumn(name = "accountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_contacts_account_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "contactId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_contacts_contact_fkey"))})
     private Set<Contact> contacts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinTable(name = "accountsLineage", joinColumns = {
-            @JoinColumn(name = "parentAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_parent_acc_fkey"))
-    }, inverseJoinColumns = {
-            @JoinColumn(name = "childAccountId", referencedColumnName = "id",foreignKey = @ForeignKey(name = "accounts_lineage_child_acc_fkey"))
-    })
+    @JoinTable(name = "accountAddresses", joinColumns = {@JoinColumn(name = "accountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_addresses_account_id_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_addresses_address_id_fkey"))})
+    private Set<Address> addresses = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinTable(name = "accountsLineage", joinColumns = {@JoinColumn(name = "parentAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_parent_acc_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "childAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_child_acc_fkey"))})
     private Set<Account> childAccounts = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
