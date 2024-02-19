@@ -5,8 +5,7 @@ import com.ctytech.flierly.contact.enitity.Contact;
 import com.ctytech.flierly.organization.entity.Branch;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +34,21 @@ public class Account implements Serializable {
 
     @NotBlank(message = "{account.name.absent}")
     private String name;
+
+    @NotBlank(message = "{account.registered.phone.absent}")
+    @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
+    @Column(unique = true, nullable = false, length = 13)
+    private String registeredPhone;
+
+    @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
+    @Column(length = 13)
+    private String alternatePhone;
+
+    @Email(message = "{email.invalid}")
+    @Pattern(regexp = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$", message = "{email.invalid}")
+    @NotBlank(message = "{account.registered.email.absent}")
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @NotNull(message = "{account.branch.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
