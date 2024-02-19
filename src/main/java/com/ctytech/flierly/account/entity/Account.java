@@ -5,6 +5,7 @@ import com.ctytech.flierly.contact.enitity.Contact;
 import com.ctytech.flierly.organization.entity.Branch;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,6 +32,9 @@ public class Account implements Serializable {
 
     @Column(columnDefinition = "boolean default false")
     private Boolean isKey;
+
+    @NotBlank(message = "account.name.absent")
+    private String name;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
