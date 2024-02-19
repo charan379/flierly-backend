@@ -19,7 +19,14 @@ public class ContactMapper {
 
     public ContactDTO toDTO(Contact contact) {
         if (contact == null) return null;
-        return modelMapper.map(contact, ContactDTO.class);
+        ContactDTO dto = new ContactDTO();
+        dto.setId(contact.getId());
+        dto.setName(contact.getName());
+        dto.setPhone(contact.getPhone());
+        dto.setAlternatePhone(contact.getAlternatePhone());
+        dto.setEmail(contact.getEmail());
+        if (contact.getAddress() != null) dto.setAddress(addressMapper.toDTO(contact.getAddress()));
+        return dto;
     }
 
     public Contact toEntity(ContactDTO contactDTO) {

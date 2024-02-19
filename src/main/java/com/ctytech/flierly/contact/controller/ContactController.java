@@ -36,7 +36,7 @@ public class ContactController {
     }
 
     @PutMapping(value = "/{contactId}/address/{addressId}")
-    public ResponseEntity<ContactDTO> updateAddressById(Long contactId, Long addressId) throws ContactServiceException {
+    public ResponseEntity<ContactDTO> updateAddressById(@PathVariable(name = "contactId") Long contactId, @PathVariable(name = "addressId") Long addressId) throws ContactServiceException {
         ContactDTO contactDTO = contactService.modifyAddress(contactId, addressId);
         return new ResponseEntity<>(contactDTO, HttpStatus.OK);
     }
