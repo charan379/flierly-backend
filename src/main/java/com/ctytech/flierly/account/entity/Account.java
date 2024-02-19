@@ -33,20 +33,20 @@ public class Account implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private Boolean isKey;
 
-    @NotBlank(message = "account.name.absent")
+    @NotBlank(message = "{account.name.absent}")
     private String name;
 
-    @NotNull
+    @NotNull(message = "{account.branch.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "branchId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_branch_fkey"), updatable = false)
     private Branch branch;
 
-    @NotNull
+    @NotNull(message = "{account.type.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "accountType", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_account_type_fkey"))
     private AccountType accountType;
 
-    @NotNull
+    @NotNull(message = "{account.subtype.absent}")
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JoinColumn(name = "accountSubtype", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_account_subtype_fkey"))
     private AccountSubtype accountSubtype;
