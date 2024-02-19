@@ -16,13 +16,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "accounts")
+@SequenceGenerator(name = "accounts_id_generator", sequenceName = "accounts_id_seq", initialValue = 1000, allocationSize = 1)
 @Getter
 @Setter
 @EqualsAndHashCode
 public class Account implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accounts_id_generator")
     private Long id;
 
     @Column(columnDefinition = "boolean default false")
