@@ -77,10 +77,10 @@ public class Account implements Serializable {
     @JoinTable(name = "accountAddresses", joinColumns = {@JoinColumn(name = "accountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_addresses_account_id_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "account_addresses_address_id_fkey"))})
     private Set<Address> addresses = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinTable(name = "accountsLineage", joinColumns = {@JoinColumn(name = "parentAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_parent_acc_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "childAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_child_acc_fkey"))})
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "parentAccount")
     private Set<Account> childAccounts = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @JoinTable(name = "accountsLineage", joinColumns = {@JoinColumn(name = "parentAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_parent_acc_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "childAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_child_acc_fkey"))})
     private Account parentAccount;
 }
