@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
@@ -31,6 +32,11 @@ public class ExceptionControllerAdvice {
         errorInfo.setErrorMessage(environment.getProperty("General.EXCEPTION"));
         errorInfo.setErrorCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         errorInfo.setTimestamp(LocalDateTime.now());
+
+        Map<String, StackTraceElement[]> er = new HashMap<>();
+        er.put(exception.getMessage(), exception.getStackTrace());
+        errorInfo.setStackTrace(er);
+
 
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -52,11 +58,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorInfo> methodArgNotValidExceptionHandler(MethodArgumentNotValidException exception) {
 
-        String errorMessage = exception.getBindingResult()
-                .getAllErrors()
-                .stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(Collectors.joining(","));
+        String errorMessage = exception.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
 
         ErrorInfo errorInfo = new ErrorInfo();
 
@@ -71,10 +73,7 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorInfo> constraintViolationExceptionHandler(ConstraintViolationException exception) {
 
-        String errorMessage = exception.getConstraintViolations()
-                .stream()
-                .map(ConstraintViolation::getMessage)
-                .collect(Collectors.joining(","));
+        String errorMessage = exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(","));
 
         ErrorInfo errorInfo = new ErrorInfo();
 
