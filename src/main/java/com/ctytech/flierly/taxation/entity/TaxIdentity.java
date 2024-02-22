@@ -1,6 +1,5 @@
 package com.ctytech.flierly.taxation.entity;
 
-import com.ctytech.flierly.address.entity.Address;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
@@ -72,9 +71,7 @@ public class TaxIdentity {
     @Column(columnDefinition = "boolean default false")
     private Boolean gstVerified;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "gstRegistrationAddress", referencedColumnName = "id", foreignKey = @ForeignKey(name = "tax_identity_gst_reg_address_fkey"))
-    private Address gstRegistrationAddress;
+    private Long gstRegistrationAddressId;
 
     @Size(min = 10, max = 10, message = "{taxIdentity.pan.invalid}")
     @Pattern(regexp = "^[0-9a-z]+$", message = "{pan.pattern.invalid}")
