@@ -1,9 +1,5 @@
 package com.ctytech.flierly.taxation.service;
 
-import com.ctytech.flierly.address.dto.AddressDTO;
-import com.ctytech.flierly.address.entity.Address;
-import com.ctytech.flierly.address.exception.AddressServiceException;
-import com.ctytech.flierly.address.service.AddressService;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import com.ctytech.flierly.taxation.exception.TaxIdentityException;
@@ -13,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Service(value = "/taxIdentityService")
 public class TaxIdentityServiceImpl implements TaxIdentityService {
@@ -23,9 +18,6 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
 
     @Autowired
     private TaxIdentityMapper taxIdentityMapper;
-
-    @Autowired
-    private AddressService addressService;
 
     @Override
     public TaxIdentityDTO save(TaxIdentityDTO taxIdentityDTO) throws TaxIdentityException {
@@ -76,16 +68,7 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
         // Update GST related fields
         taxIdentity.setGstVerified(Objects.requireNonNullElse(update.getGstVerified(), taxIdentity.getGstVerified()));
         taxIdentity.setGstRegistrationDate(Objects.requireNonNullElse(update.getGstRegistrationDate(), taxIdentity.getGstRegistrationDate()));
-        // Update GST registration address if changed
-        Long currentGstAddressId = Optional.ofNullable(taxIdentity.getGstRegistrationAddress()).map(Address::getId).orElse(null);
-        Long newGstAddressId = Optional.ofNullable(update.getGstRegistrationAddress()).map(AddressDTO::getId).orElse(null);
-        if (!Objects.equals(newGstAddressId, currentGstAddressId)) if (newGstAddressId != null) {
-            try {
-                taxIdentity.setGstRegistrationAddress(taxIdentityMapper.getAddressMapper().toEntity(addressService.fetch(newGstAddressId)));
-            } catch (AddressServiceException e) {
-                throw new TaxIdentityException(e.getMessage());
-            }
-        }
+        taxIdentity.setGstRegistrationAddressId(Objects.requireNonNullElse(update.getGstRegistrationAddressId(), taxIdentity.getGstRegistrationAddressId()));
         // Set PAN if not present and provided
         if (taxIdentity.getPan() == null && update.getPan() != null) {
             // Check if provided pan already exists
