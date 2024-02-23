@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-@Service(value = "/taxIdentityService")
+@Service(value = "taxIdentityService")
 public class TaxIdentityServiceImpl implements TaxIdentityService {
 
     @Autowired
@@ -36,21 +36,21 @@ public class TaxIdentityServiceImpl implements TaxIdentityService {
     }
 
     @Override
-    public TaxIdentityDTO fetch(Long id) throws TaxIdentityException {
+    public TaxIdentityDTO fetch(Long id, String... includesDTOs) throws TaxIdentityException {
         TaxIdentity taxIdentity = taxIdentityRepository.findById(id).orElseThrow(() -> new TaxIdentityException("TaxIdentityService.NOT_FOUND"));
-        return taxIdentityMapper.toDTO(taxIdentity);
+        return taxIdentityMapper.toDTO(taxIdentity, includesDTOs);
     }
 
     @Override
-    public TaxIdentityDTO fetchByGstNumber(String gstNumber) throws TaxIdentityException {
+    public TaxIdentityDTO fetchByGstNumber(String gstNumber, String... includesDTOs) throws TaxIdentityException {
         TaxIdentity taxIdentity = taxIdentityRepository.findByGst(gstNumber).orElseThrow(() -> new TaxIdentityException("TaxIdentityService.NOT_FOUND"));
-        return taxIdentityMapper.toDTO(taxIdentity);
+        return taxIdentityMapper.toDTO(taxIdentity, includesDTOs);
     }
 
     @Override
-    public TaxIdentityDTO fetchByPanNumber(String panNumber) throws TaxIdentityException {
+    public TaxIdentityDTO fetchByPanNumber(String panNumber, String... includesDTOs) throws TaxIdentityException {
         TaxIdentity taxIdentity = taxIdentityRepository.findByPan(panNumber).orElseThrow(() -> new TaxIdentityException("TaxIdentityService.NOT_FOUND"));
-        return taxIdentityMapper.toDTO(taxIdentity);
+        return taxIdentityMapper.toDTO(taxIdentity, includesDTOs);
     }
 
     @Override
