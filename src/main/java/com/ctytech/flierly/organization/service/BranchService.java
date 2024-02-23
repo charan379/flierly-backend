@@ -9,9 +9,9 @@ public interface BranchService {
 
     BranchDTO save(BranchDTO branchDTO) throws BranchServiceException;
 
-    BranchDTO fetch(Long id) throws BranchServiceException;
+    BranchDTO fetch(Long id, String... includesDTOs) throws BranchServiceException;
 
-    List<BranchDTO> fetchAll();
+    List<BranchDTO> fetchAll(String... includesDTOs);
 
     BranchDTO modify(Long id, BranchDTO update) throws BranchServiceException;
 

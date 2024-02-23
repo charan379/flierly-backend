@@ -25,14 +25,16 @@ public class BranchController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<BranchDTO> getById(@PathVariable(name = "id") Long id) throws BranchServiceException {
-        BranchDTO branchDTO = branchService.fetch(id);
+    public ResponseEntity<BranchDTO> getById(@PathVariable(name = "id") Long id,
+                                             @RequestParam(name = "append_to_response", required = false) String... includesDTOs)
+            throws BranchServiceException {
+        BranchDTO branchDTO = branchService.fetch(id, includesDTOs);
         return new ResponseEntity<>(branchDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<BranchDTO>> getAll() {
-        List<BranchDTO> branchDTOS = branchService.fetchAll();
+    public ResponseEntity<List<BranchDTO>> getAll(@RequestParam(name = "append_to_response", required = false) String... includesDTOs) {
+        List<BranchDTO> branchDTOS = branchService.fetchAll(includesDTOs);
         return new ResponseEntity<>(branchDTOS, HttpStatus.OK);
     }
 
@@ -55,19 +57,25 @@ public class BranchController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<BranchDTO> updateById(@PathVariable(name = "id") Long id, @RequestBody @Validated BranchDTO update) throws BranchServiceException {
+    public ResponseEntity<BranchDTO> updateById(@PathVariable(name = "id") Long id,
+                                                @RequestBody @Validated BranchDTO update)
+            throws BranchServiceException {
         BranchDTO branchDTO = branchService.modify(id, update);
         return new ResponseEntity<>(branchDTO, HttpStatus.OK);
     }
 
     @PutMapping(value = "/update/{branchId}/address/{addressId}")
-    public ResponseEntity<BranchDTO> updateAddress(@PathVariable(name = "branchId") Long branchId, @PathVariable(name = "addressId") Long addressId) throws BranchServiceException {
+    public ResponseEntity<BranchDTO> updateAddress(@PathVariable(name = "branchId") Long branchId,
+                                                   @PathVariable(name = "addressId") Long addressId)
+            throws BranchServiceException {
         BranchDTO branchDTO = branchService.modifyAddressById(branchId, addressId);
         return new ResponseEntity<>(branchDTO, HttpStatus.OK);
     }
 
     @PutMapping(value = "/update/{branchId}/tax-identity/{taxIdentityId}")
-    public ResponseEntity<BranchDTO> updateTaxIdentify(@PathVariable(name = "branchId") Long branchId, @PathVariable(name = "taxIdentityId") Long taxIdentityId) throws BranchServiceException {
+    public ResponseEntity<BranchDTO> updateTaxIdentify(@PathVariable(name = "branchId") Long branchId,
+                                                       @PathVariable(name = "taxIdentityId") Long taxIdentityId)
+            throws BranchServiceException {
         BranchDTO branchDTO = branchService.modifyTaxIdentityById(branchId, taxIdentityId);
         return new ResponseEntity<>(branchDTO, HttpStatus.OK);
     }

@@ -21,6 +21,10 @@ public class BranchDTO implements Serializable {
 
     private Boolean isActive;
 
+    private Long addressId;
+
+    private Long taxIdentityId;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private AddressDTO address;
 

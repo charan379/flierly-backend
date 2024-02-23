@@ -1,10 +1,14 @@
 package com.ctytech.flierly.taxation.mapper;
 
+import com.ctytech.flierly.FlierlyException;
+import com.ctytech.flierly.address.dto.AddressDTO;
+import com.ctytech.flierly.address.service.AddressService;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
 import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import com.ctytech.flierly.utility.ModelMappingUtils;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Conditions;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +20,8 @@ public class TaxIdentityMapper {
 
     @Autowired
     private ModelMappingUtils modelMappingUtils;
+    @Autowired
+    private AddressService addressService;
 
     @PostConstruct
     public void init() {
@@ -49,6 +55,18 @@ public class TaxIdentityMapper {
                 .addMapping(TaxIdentity::getTin, TaxIdentityDTO::setTin);
     }
 
+
+    private final Converter<Long, AddressDTO> addressIdToAddressConverter = mappingContext -> {
+        if (mappingContext.getSource() != null) {
+            try {
+                return addressService.fetch(mappingContext.getSource());
+            } catch (FlierlyException e) {
+                return new AddressDTO();
+            }
+        }
+        return null;
+    };
+
     public TaxIdentityDTO toDTO(TaxIdentity taxIdentity, String... includesDTOs) {
         // If null return null
         if (taxIdentity == null) return null;
@@ -56,7 +74,7 @@ public class TaxIdentityMapper {
         modelMapper.getTypeMap(TaxIdentity.class, TaxIdentityDTO.class)
                 .addMappings(mapper -> mapper
                         .when(modelMappingUtils.canInclude("gst_registration_address", includesDTOs))
-                        .using(modelMappingUtils.addressIdToAddressConverter)
+                        .using(addressIdToAddressConverter)
                         .map(TaxIdentity::getGstRegistrationAddressId, TaxIdentityDTO::setGstRegistrationAddress));
         // return taxIdentityDTO
         return modelMapper.map(taxIdentity, TaxIdentityDTO.class);

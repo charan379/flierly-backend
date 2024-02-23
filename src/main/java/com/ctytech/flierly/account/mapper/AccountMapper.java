@@ -4,8 +4,6 @@ import com.ctytech.flierly.account.dto.AccountDTO;
 import com.ctytech.flierly.account.entity.Account;
 import com.ctytech.flierly.address.mapper.AddressMapper;
 import com.ctytech.flierly.contact.mapper.ContactMapper;
-import com.ctytech.flierly.organization.mapper.BranchMapper;
-import com.ctytech.flierly.taxation.mapper.TaxIdentityMapper;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -19,16 +17,10 @@ public class AccountMapper {
     private ModelMapper modelMapper;
     @Getter
     @Autowired
-    private BranchMapper branchMapper;
-    @Getter
-    @Autowired
     private AccountTypeMapper accountTypeMapper;
     @Getter
     @Autowired
     private AccountSubtypeMapper accountSubtypeMapper;
-    @Getter
-    @Autowired
-    private TaxIdentityMapper taxIdentityMapper;
     @Getter
     @Autowired
     private ContactMapper contactMapper;
@@ -47,10 +39,8 @@ public class AccountMapper {
         dto.setRegisteredPhone(account.getRegisteredPhone());
         dto.setAlternatePhone(account.getAlternatePhone());
         dto.setEmail(account.getEmail());
-        dto.setBranch(branchMapper.toDTO(account.getBranch(), true));
         dto.setAccountType(accountTypeMapper.toDTO(account.getAccountType()));
         dto.setAccountSubtype(accountSubtypeMapper.toDTO(account.getAccountSubtype()));
-        dto.setTaxIdentity(taxIdentityMapper.toDTO(account.getTaxIdentity()));
 //        dto.setContacts();
         return dto;
     }
