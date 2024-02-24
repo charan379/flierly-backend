@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service(value = "accountTypeService")
@@ -21,27 +22,14 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     private AccountTypeRepository accountTypeRepository;
     @Autowired
     private AccountTypeMapper accountTypeMapper;
-    @Autowired
-    private AccountSubtypeService accountSubtypeService;
 
     @Override
     public AccountTypeDTO save(AccountTypeDTO accountTypeDTO) throws AccountServiceException {
         // Check if name already exists
         if (existsByName(accountTypeDTO.getName()))
             throw new AccountServiceException("AccountType.NAME_ALREADY_EXISTS");
-        // Create set for subtypes
-        Set<AccountSubtype> subtypes = new HashSet<>();
-        // if subtypes provided then
-        if (accountTypeDTO.getSubtypes() != null) {
-            Set<Long> subTypeIds = accountTypeDTO.getSubtypes().stream().map(AccountSubtypeDTO::getId).filter(Objects::nonNull).collect(Collectors.toSet());
-            subtypes.addAll(accountSubtypeService.fetchByIds(subTypeIds));
-        }
-        // create new entity type
-        AccountType newAccountType = new AccountType();
-        newAccountType.setName(accountTypeDTO.getName());
-        newAccountType.setSubtypes(subtypes);
         // Save new account type
-        return accountTypeMapper.toDTO(accountTypeRepository.save(newAccountType));
+        return accountTypeMapper.toDTO(accountTypeRepository.save(accountTypeMapper.toEntity(accountTypeDTO)));
     }
 
     @Override
@@ -79,7 +67,7 @@ public class AccountTypeServiceImpl implements AccountTypeService {
             // get ids which are not available in accountType entity but available in subTypes DTO set, those will be mapped to accountType entity
             Set<Long> subTypesToBeMapped = subtypes.stream().map(AccountSubtypeDTO::getId).filter(upId -> !existingSubtypeIds.contains(upId)).collect(Collectors.toSet());
             // For each id in subTypesToBeMapped check if it exists in db then map it to accountType
-            accountType.getSubtypes().addAll(accountSubtypeService.fetchByIds(subTypesToBeMapped));
+            accountType.getSubtypes().addAll(accountTypeMapper.subtypeIdsToSubtypes(subTypesToBeMapped));
             // Remove subtypes which are to be De-mapped form accountType
             accountType.getSubtypes().removeIf(accountSubtype -> subTypesToBeDeMapped.contains(accountSubtype.getId()));
             // Return new accountType with updated subtypes set
