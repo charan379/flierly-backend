@@ -1,6 +1,7 @@
 package com.ctytech.flierly.contact.dto;
 
 import com.ctytech.flierly.address.dto.AddressDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,5 +30,8 @@ public class ContactDTO implements Serializable {
     @NotBlank(message = "{contact.email.absent}")
     private String email;
 
+    private Long addressId;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private AddressDTO address;
 }

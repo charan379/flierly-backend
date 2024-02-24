@@ -24,8 +24,10 @@ public class ContactController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ContactDTO> getById(@PathVariable(name = "id") Long id) throws ContactServiceException {
-        ContactDTO contactDTO = contactService.fetch(id);
+    public ResponseEntity<ContactDTO> getById(@PathVariable(name = "id") Long id,
+                                              @RequestParam(name = "append_to_response", required = false) String... includesDTOs
+    ) throws ContactServiceException {
+        ContactDTO contactDTO = contactService.fetch(id, includesDTOs);
         return new ResponseEntity<>(contactDTO, HttpStatus.OK);
     }
 

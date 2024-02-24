@@ -7,7 +7,7 @@ public interface ContactService {
 
     ContactDTO save(ContactDTO contactDTO) throws ContactServiceException;
 
-    ContactDTO fetch(Long id) throws ContactServiceException;
+    ContactDTO fetch(Long id, String... includesDTOs) throws ContactServiceException;
 
     ContactDTO modify(Long id, ContactDTO update) throws ContactServiceException;
 
