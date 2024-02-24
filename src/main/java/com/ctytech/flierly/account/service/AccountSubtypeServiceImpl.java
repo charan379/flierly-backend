@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service(value = "accountSubtypeService")
 public class AccountSubtypeServiceImpl implements AccountSubtypeService {
@@ -37,6 +38,11 @@ public class AccountSubtypeServiceImpl implements AccountSubtypeService {
     @Override
     public List<AccountSubtypeDTO> fetchAll() {
         return accountSubtypeRepository.findAll().stream().map(accountSubtype -> accountSubtypeMapper.toDTO(accountSubtype)).toList();
+    }
+
+    @Override
+    public List<AccountSubtype> fetchByIds(Set<Long> ids) {
+        return accountSubtypeRepository.findAllById(ids);
     }
 
     @Override
