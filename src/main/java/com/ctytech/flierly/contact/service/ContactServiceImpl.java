@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service(value = "contactService")
 public class ContactServiceImpl implements ContactService {
@@ -27,9 +29,16 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ContactDTO fetch(Long id,String... includesDTOs) throws ContactServiceException {
+    public ContactDTO fetch(Long id, String... includesDTOs) throws ContactServiceException {
         Contact contact = contactRepository.findById(id).orElseThrow(() -> new ContactServiceException("Contact.NOT_FOUND"));
         return contactMapper.toDTO(contact, includesDTOs);
+    }
+
+    @Override
+    public Set<ContactDTO> fetchAllByIds(Set<Long> ids, String... includesDTOs) {
+        return contactRepository.findAllById(ids).stream()
+                .map(contact -> contactMapper.toDTO(contact, includesDTOs))
+                .collect(Collectors.toSet());
     }
 
     @Override
