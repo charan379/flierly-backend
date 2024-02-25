@@ -17,7 +17,7 @@ public interface AccountTypeService {
 
     AccountTypeDTO modify(Long id, AccountTypeDTO update) throws AccountServiceException;
 
-    AccountTypeDTO modifySubtypes(Long id, Set<AccountSubtypeDTO> subtypes) throws AccountServiceException;
+    AccountTypeDTO modifySubtypes(Long id, Set<Long> subtypesIds) throws AccountServiceException;
 
     Boolean existsByName(String name);
 }

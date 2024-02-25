@@ -52,14 +52,6 @@ public class AccountTypeMapper {
         return new HashSet<>();
     };
 
-    private final Converter<Set<AccountSubtypeDTO>, Set<AccountSubtype>> subTypeDTOsToSubtypes = mappingContext -> {
-        if (mappingContext.getSource() != null) {
-            Set<Long> subTypeIds = mappingContext.getSource().stream().map(AccountSubtypeDTO::getId).collect(Collectors.toSet());
-            return new HashSet<>(accountSubtypeService.fetchByIds(subTypeIds));
-        }
-        return new HashSet<>();
-    };
-
     public AccountTypeDTO toDTO(AccountType accountType, String... includeDTOs) {
         if (accountType == null) return null;
         // Include SubType DTOs based on includesDTOs option
@@ -81,8 +73,8 @@ public class AccountTypeMapper {
         modelMapper.getTypeMap(AccountTypeDTO.class, AccountType.class)
                 .addMappings(mapper -> mapper
                         .when(Conditions.isNotNull())
-                        .using(subTypeDTOsToSubtypes)
-                        .map(AccountTypeDTO::getSubtypes, AccountType::setSubtypes)
+                        .using(subTypeIdsToSubtypes)
+                        .map(AccountTypeDTO::getSubTypeIds, AccountType::setSubtypes)
                 );
         // Return accountType entity
         return modelMapper.map(accountTypeDTO, AccountType.class);

@@ -1,6 +1,5 @@
 package com.ctytech.flierly.account.controller;
 
-import com.ctytech.flierly.account.dto.AccountSubtypeDTO;
 import com.ctytech.flierly.account.dto.AccountTypeDTO;
 import com.ctytech.flierly.account.exception.AccountServiceException;
 import com.ctytech.flierly.account.service.AccountTypeService;
@@ -54,8 +53,8 @@ public class AccountTypeController {
     }
 
     @PutMapping(value = "/{id}/subtypes")
-    public ResponseEntity<AccountTypeDTO> updateSubtypesById(@PathVariable(name = "id") Long id, @RequestBody @Valid Set<AccountSubtypeDTO> subtypes) throws AccountServiceException {
-        AccountTypeDTO accountTypeDTO = accountTypeService.modifySubtypes(id, subtypes);
+    public ResponseEntity<AccountTypeDTO> updateSubtypesById(@PathVariable(name = "id") Long id, @RequestBody @Valid Set<Long> subtypesIds) throws AccountServiceException {
+        AccountTypeDTO accountTypeDTO = accountTypeService.modifySubtypes(id, subtypesIds);
         return new ResponseEntity<>(accountTypeDTO, HttpStatus.OK);
     }
 }

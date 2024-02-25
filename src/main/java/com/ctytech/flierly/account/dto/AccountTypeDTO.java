@@ -18,5 +18,8 @@ public class AccountTypeDTO implements Serializable {
     private String name;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Set<Long> subTypeIds;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Set<AccountSubtypeDTO> subtypes;
 }

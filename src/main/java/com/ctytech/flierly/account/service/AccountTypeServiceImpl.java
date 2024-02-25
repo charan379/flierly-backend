@@ -56,16 +56,16 @@ public class AccountTypeServiceImpl implements AccountTypeService {
     }
 
     @Override
-    public AccountTypeDTO modifySubtypes(Long id, Set<AccountSubtypeDTO> subtypes) throws AccountServiceException {
+    public AccountTypeDTO modifySubtypes(Long id, Set<Long> subtypesIds) throws AccountServiceException {
         AccountType accountType = accountTypeRepository.findById(id).orElseThrow(() -> new AccountServiceException("AccountType.NOT_FOUND"));
         // Check if provided subtypes set is not null
-        if (subtypes != null) {
+        if (subtypesIds != null) {
             // get ids of all subtypes available accountType
             Set<Long> existingSubtypeIds = accountType.getSubtypes().stream().map(AccountSubtype::getId).collect(Collectors.toSet());
-            // get ids which are available in accountType entity but not in subTypes DTO set, those will be de-mapped form accountType entity
-            Set<Long> subTypesToBeDeMapped = existingSubtypeIds.stream().filter(exId -> subtypes.stream().noneMatch(accStDTO -> accStDTO.getId().equals(exId))).collect(Collectors.toSet());
-            // get ids which are not available in accountType entity but available in subTypes DTO set, those will be mapped to accountType entity
-            Set<Long> subTypesToBeMapped = subtypes.stream().map(AccountSubtypeDTO::getId).filter(upId -> !existingSubtypeIds.contains(upId)).collect(Collectors.toSet());
+            // get ids which are available in accountType entity but not in subTypesIds set, those will be de-mapped form accountType entity
+            Set<Long> subTypesToBeDeMapped = existingSubtypeIds.stream().filter(exId -> subtypesIds.stream().noneMatch(upId -> upId.equals(exId))).collect(Collectors.toSet());
+            // get ids which are not available in accountType entity but available in subTypesIds set, those will be mapped to accountType entity
+            Set<Long> subTypesToBeMapped = subtypesIds.stream().filter(upId -> !existingSubtypeIds.contains(upId)).collect(Collectors.toSet());
             // For each id in subTypesToBeMapped check if it exists in db then map it to accountType
             accountType.getSubtypes().addAll(accountTypeMapper.subtypeIdsToSubtypes(subTypesToBeMapped));
             // Remove subtypes which are to be De-mapped form accountType
