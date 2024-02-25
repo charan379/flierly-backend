@@ -10,6 +10,10 @@ import com.ctytech.flierly.account.entity.AccountType;
 import com.ctytech.flierly.account.exception.AccountServiceException;
 import com.ctytech.flierly.account.service.AccountSubtypeService;
 import com.ctytech.flierly.account.service.AccountTypeService;
+import com.ctytech.flierly.address.dto.AddressDTO;
+import com.ctytech.flierly.address.service.AddressService;
+import com.ctytech.flierly.contact.dto.ContactDTO;
+import com.ctytech.flierly.contact.service.ContactService;
 import com.ctytech.flierly.organization.dto.BranchDTO;
 import com.ctytech.flierly.organization.service.BranchService;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
@@ -24,7 +28,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class AccountMapper {
@@ -40,6 +46,10 @@ public class AccountMapper {
     private BranchService branchService;
     @Autowired
     private TaxIdentityService taxIdentityService;
+    @Autowired
+    private ContactService contactService;
+    @Autowired
+    private AddressService addressService;
 
     @PostConstruct
     public void init() {
@@ -153,6 +163,18 @@ public class AccountMapper {
         return null;
     };
 
+    private final Converter<Set<Long>, Set<ContactDTO>> contactIdsToDTOsConverter = mappingContext -> {
+        if (mappingContext.getSource() != null)
+            return contactService.fetchAllByIds(mappingContext.getSource());
+        return new HashSet<>();
+    };
+
+    private final Converter<Set<Long>, Set<AddressDTO>> addressIdsToDTOsConverter = mappingContext -> {
+        if (mappingContext.getSource() != null)
+            return addressService.fetchAllByIds(mappingContext.getSource());
+        return new HashSet<>();
+    };
+
     private final Converter<AccountType, Long> accountTypeToIdConverter = mappingContext -> {
         if (mappingContext.getSource() != null)
             return mappingContext.getSource().getId();
@@ -177,7 +199,17 @@ public class AccountMapper {
                 .addMappings(mapper -> mapper
                         .when(modelMappingUtils.canInclude("tax_identity", includeDTOs))
                         .using(taxIdentityIdToDTOConverter)
-                        .map(Account::getTaxIdentityId, AccountDTO::setTaxIdentity));
+                        .map(Account::getTaxIdentityId, AccountDTO::setTaxIdentity))
+                // Include Contacts based on includeDTOs
+                .addMappings(mapper -> mapper
+                        .when(modelMappingUtils.canInclude("contacts", includeDTOs))
+                        .using(contactIdsToDTOsConverter)
+                        .map(Account::getContactIds, AccountDTO::setContacts))
+                // Include Address based on includeDTOs
+                .addMappings(mapper -> mapper
+                        .when(modelMappingUtils.canInclude("addresses", includeDTOs))
+                        .using(addressIdsToDTOsConverter)
+                        .map(Account::getAddressIds, AccountDTO::setAddresses));
         return modelMapper.map(account, AccountDTO.class);
     }
 
