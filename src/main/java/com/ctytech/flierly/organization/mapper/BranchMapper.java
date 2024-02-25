@@ -79,14 +79,13 @@ public class BranchMapper {
 
     public BranchDTO toDTO(Branch branch, String... includesDTOs) {
         if (branch == null) return null;
-        // Include Address DTO based on includes
         modelMapper.getTypeMap(Branch.class, BranchDTO.class)
+                // Include Address DTO based on includes
                 .addMappings(mapper -> mapper
                         .when(modelMappingUtils.canInclude("address", includesDTOs))
                         .using(addressIdToAddressConverter)
-                        .map(Branch::getAddressId, BranchDTO::setAddress));
-        // Include TaxIdentity DTO based on includes
-        modelMapper.getTypeMap(Branch.class, BranchDTO.class)
+                        .map(Branch::getAddressId, BranchDTO::setAddress))
+                // Include TaxIdentity DTO based on includes
                 .addMappings(mapper -> mapper
                         .when(modelMappingUtils.canInclude("tax_identity", includesDTOs))
                         .using(taxIdentityIdToDtoConverter)

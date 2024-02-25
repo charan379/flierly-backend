@@ -1,5 +1,6 @@
 package com.ctytech.flierly.account.mapper;
 
+import com.ctytech.flierly.FlierlyException;
 import com.ctytech.flierly.account.dto.AccountDTO;
 import com.ctytech.flierly.account.dto.AccountSubtypeDTO;
 import com.ctytech.flierly.account.dto.AccountTypeDTO;
@@ -9,6 +10,11 @@ import com.ctytech.flierly.account.entity.AccountType;
 import com.ctytech.flierly.account.exception.AccountServiceException;
 import com.ctytech.flierly.account.service.AccountSubtypeService;
 import com.ctytech.flierly.account.service.AccountTypeService;
+import com.ctytech.flierly.organization.dto.BranchDTO;
+import com.ctytech.flierly.organization.service.BranchService;
+import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
+import com.ctytech.flierly.taxation.service.TaxIdentityService;
+import com.ctytech.flierly.utility.ModelMappingUtils;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Converter;
 import org.modelmapper.MappingException;
@@ -25,9 +31,15 @@ public class AccountMapper {
 
     private ModelMapper modelMapper;
     @Autowired
+    private ModelMappingUtils modelMappingUtils;
+    @Autowired
     private AccountTypeService accountTypeService;
     @Autowired
     private AccountSubtypeService accountSubtypeService;
+    @Autowired
+    private BranchService branchService;
+    @Autowired
+    private TaxIdentityService taxIdentityService;
 
     @PostConstruct
     public void init() {
@@ -119,6 +131,28 @@ public class AccountMapper {
         return null;
     };
 
+    private final Converter<Long, BranchDTO> branchIdToDTOConverter = mappingContext -> {
+        if (mappingContext.getSource() != null) {
+            try {
+                return branchService.fetch(mappingContext.getSource());
+            } catch (FlierlyException e) {
+                return null;
+            }
+        }
+        return null;
+    };
+
+    private final Converter<Long, TaxIdentityDTO> taxIdentityIdToDTOConverter = mappingContext -> {
+        if (mappingContext.getSource() != null) {
+            try {
+                return taxIdentityService.fetch(mappingContext.getSource());
+            } catch (FlierlyException e) {
+                return null;
+            }
+        }
+        return null;
+    };
+
     private final Converter<AccountType, Long> accountTypeToIdConverter = mappingContext -> {
         if (mappingContext.getSource() != null)
             return mappingContext.getSource().getId();
@@ -131,8 +165,19 @@ public class AccountMapper {
         return null;
     };
 
-    private AccountDTO toDTO(Account account) {
+    private AccountDTO toDTO(Account account, String... includeDTOs) {
         if (account == null) return null;
+        modelMapper.getTypeMap(Account.class, AccountDTO.class)
+                // Include BranchDTO based on includeDTOs
+                .addMappings(mapper -> mapper
+                        .when(modelMappingUtils.canInclude("branch", includeDTOs))
+                        .using(branchIdToDTOConverter)
+                        .map(Account::getBranchId, AccountDTO::setBranch))
+                // Include TaxIdentity based on includeDTOs
+                .addMappings(mapper -> mapper
+                        .when(modelMappingUtils.canInclude("tax_identity", includeDTOs))
+                        .using(taxIdentityIdToDTOConverter)
+                        .map(Account::getTaxIdentityId, AccountDTO::setTaxIdentity));
         return modelMapper.map(account, AccountDTO.class);
     }
 
