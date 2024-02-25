@@ -29,18 +29,18 @@ public class AccountTypeServiceImpl implements AccountTypeService {
         if (existsByName(accountTypeDTO.getName()))
             throw new AccountServiceException("AccountType.NAME_ALREADY_EXISTS");
         // Save new account type
-        return accountTypeMapper.toDTO(accountTypeRepository.save(accountTypeMapper.toEntity(accountTypeDTO)));
+        return accountTypeMapper.toDTO(accountTypeRepository.save(accountTypeMapper.toEntity(accountTypeDTO)), "subtypes");
     }
 
     @Override
-    public AccountTypeDTO fetch(Long id) throws AccountServiceException {
+    public AccountTypeDTO fetch(Long id, String... includeDTOs) throws AccountServiceException {
         AccountType accountType = accountTypeRepository.findById(id).orElseThrow(() -> new AccountServiceException("AccountType.NOT_FOUND"));
-        return accountTypeMapper.toDTO(accountType);
+        return accountTypeMapper.toDTO(accountType, includeDTOs);
     }
 
     @Override
-    public List<AccountTypeDTO> fetchAll() {
-        return accountTypeRepository.findAll().stream().map(accountType -> accountTypeMapper.toDTO(accountType)).toList();
+    public List<AccountTypeDTO> fetchAll(String... includeDTOs) {
+        return accountTypeRepository.findAll().stream().map(accountType -> accountTypeMapper.toDTO(accountType, includeDTOs)).toList();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class AccountTypeServiceImpl implements AccountTypeService {
             // Remove subtypes which are to be De-mapped form accountType
             accountType.getSubtypes().removeIf(accountSubtype -> subTypesToBeDeMapped.contains(accountSubtype.getId()));
             // Return new accountType with updated subtypes set
-            return accountTypeMapper.toDTO(accountTypeRepository.save(accountType));
+            return accountTypeMapper.toDTO(accountTypeRepository.save(accountType), "subtypes");
         } else
             // if provided subtypes set is a null then just return accountType fetched from db
             return accountTypeMapper.toDTO(accountType);

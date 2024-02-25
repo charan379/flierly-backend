@@ -28,14 +28,16 @@ public class AccountTypeController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AccountTypeDTO> getById(@PathVariable(name = "id") Long id) throws AccountServiceException {
-        AccountTypeDTO accountTypeDTO = accountTypeService.fetch(id);
+    public ResponseEntity<AccountTypeDTO> getById(@PathVariable(name = "id") Long id,
+                                                  @RequestParam(name = "append_to_response", required = false) String... includesDTOs
+    ) throws AccountServiceException {
+        AccountTypeDTO accountTypeDTO = accountTypeService.fetch(id, includesDTOs);
         return new ResponseEntity<>(accountTypeDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountTypeDTO>> getAll() {
-        List<AccountTypeDTO> accountTypeDTOS = accountTypeService.fetchAll();
+    public ResponseEntity<List<AccountTypeDTO>> getAll(@RequestParam(name = "append_to_response", required = false) String... includesDTOs) {
+        List<AccountTypeDTO> accountTypeDTOS = accountTypeService.fetchAll(includesDTOs);
         return new ResponseEntity<>(accountTypeDTOS, HttpStatus.OK);
     }
 

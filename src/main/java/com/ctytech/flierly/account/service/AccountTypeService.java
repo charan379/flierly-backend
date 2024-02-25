@@ -11,9 +11,9 @@ public interface AccountTypeService {
 
     AccountTypeDTO save(AccountTypeDTO accountTypeDTO) throws AccountServiceException;
 
-    AccountTypeDTO fetch(Long id) throws AccountServiceException;
+    AccountTypeDTO fetch(Long id, String... includeDTOs) throws AccountServiceException;
 
-    List<AccountTypeDTO> fetchAll();
+    List<AccountTypeDTO> fetchAll(String... includeDTOs);
 
     AccountTypeDTO modify(Long id, AccountTypeDTO update) throws AccountServiceException;
 
