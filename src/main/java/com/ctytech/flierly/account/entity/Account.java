@@ -74,7 +74,7 @@ public class Account implements Serializable {
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "parentAccount")
     private Set<Account> childAccounts = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(name = "accountsLineage", joinColumns = {@JoinColumn(name = "parentAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_parent_acc_fkey"))}, inverseJoinColumns = {@JoinColumn(name = "childAccountId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "accounts_lineage_child_acc_fkey"))})
     private Account parentAccount;
 }

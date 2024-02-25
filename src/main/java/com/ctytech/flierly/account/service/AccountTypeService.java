@@ -1,6 +1,5 @@
 package com.ctytech.flierly.account.service;
 
-import com.ctytech.flierly.account.dto.AccountSubtypeDTO;
 import com.ctytech.flierly.account.dto.AccountTypeDTO;
 import com.ctytech.flierly.account.exception.AccountServiceException;
 
