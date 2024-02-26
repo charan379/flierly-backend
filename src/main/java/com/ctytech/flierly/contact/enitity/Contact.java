@@ -1,6 +1,5 @@
 package com.ctytech.flierly.contact.enitity;
 
-import com.ctytech.flierly.address.entity.Address;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
@@ -39,7 +38,5 @@ public class Contact {
     @NotBlank(message = "{contact.email.absent}")
     private String email;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "contact_address_fkey"))
-    private Address address;
+    private Long addressId;
 }

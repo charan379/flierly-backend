@@ -1,7 +1,5 @@
 package com.ctytech.flierly.organization.entity;
 
-import com.ctytech.flierly.address.entity.Address;
-import com.ctytech.flierly.taxation.entity.TaxIdentity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
@@ -31,13 +29,9 @@ public class Branch implements Serializable {
     @Column(columnDefinition = "boolean default false")
     private Boolean isActive;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "addressId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_address_fkey"))
-    private Address address;
+    private Long addressId;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
-    @JoinColumn(name = "taxIdentityId", referencedColumnName = "id", foreignKey = @ForeignKey(name = "branch_tax_identity_fkey"))
-    private TaxIdentity taxIdentity;
+    private Long taxIdentityId;
 
     @Digits(integer = 13, fraction = 0, message = "{phone.invalid}")
     @NotBlank(message = "{branch.phone.absent}")

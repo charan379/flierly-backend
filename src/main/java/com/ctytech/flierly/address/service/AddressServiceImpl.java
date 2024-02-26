@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service(value = "addressService")
 public class AddressServiceImpl implements AddressService {
@@ -45,6 +47,13 @@ public class AddressServiceImpl implements AddressService {
     public AddressDTO fetch(Long id) throws AddressServiceException {
         Address address = addressRepository.findById(id).orElseThrow(() -> new AddressServiceException("AddressService.NOT_FOUND"));
         return addressMapper.toDTO(address);
+    }
+
+    @Override
+    public Set<AddressDTO> fetchAllByIds(Set<Long> ids) {
+        return addressRepository.findAllById(ids).stream()
+                .map(address -> addressMapper.toDTO(address))
+                .collect(Collectors.toSet());
     }
 
     @Override

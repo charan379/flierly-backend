@@ -30,6 +30,8 @@ public class TaxIdentityDTO implements Serializable {
 
     private Boolean gstVerified;
 
+    private Long gstRegistrationAddressId;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private AddressDTO gstRegistrationAddress;
 

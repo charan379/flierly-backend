@@ -22,20 +22,20 @@ public class TaxIdentityController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TaxIdentityDTO> getById(@PathVariable(name = "id") Long id) throws TaxIdentityException {
-        TaxIdentityDTO taxIdentityDTO = taxIdentityService.fetch(id);
+    public ResponseEntity<TaxIdentityDTO> getById(@PathVariable(name = "id") Long id, @RequestParam(name = "append_to_response", required = false) String... includesDTOs) throws TaxIdentityException {
+        TaxIdentityDTO taxIdentityDTO = taxIdentityService.fetch(id, includesDTOs);
         return new ResponseEntity<>(taxIdentityDTO, HttpStatus.OK);
     }
 
     @GetMapping(value = "/gst/{gstNumber}")
-    public ResponseEntity<TaxIdentityDTO> getByGst(@PathVariable(name = "gstNumber") String gstNumber) throws TaxIdentityException {
-        TaxIdentityDTO taxIdentityDTO = taxIdentityService.fetchByGstNumber(gstNumber.toLowerCase());
+    public ResponseEntity<TaxIdentityDTO> getByGst(@PathVariable(name = "gstNumber") String gstNumber, @RequestParam(name = "append_to_response", required = false) String... includesDTOs) throws TaxIdentityException {
+        TaxIdentityDTO taxIdentityDTO = taxIdentityService.fetchByGstNumber(gstNumber.toLowerCase(), includesDTOs);
         return new ResponseEntity<>(taxIdentityDTO, HttpStatus.OK);
     }
 
     @GetMapping(value = "/pan/{panNumber}")
-    public ResponseEntity<TaxIdentityDTO> getByPan(@PathVariable(name = "panNumber") String panNumber) throws TaxIdentityException {
-        TaxIdentityDTO taxIdentityDTO = taxIdentityService.fetchByPanNumber(panNumber.toLowerCase());
+    public ResponseEntity<TaxIdentityDTO> getByPan(@PathVariable(name = "panNumber") String panNumber, @RequestParam(name = "append_to_response", required = false) String... includesDTOs) throws TaxIdentityException {
+        TaxIdentityDTO taxIdentityDTO = taxIdentityService.fetchByPanNumber(panNumber.toLowerCase(), includesDTOs);
         return new ResponseEntity<>(taxIdentityDTO, HttpStatus.OK);
     }
 

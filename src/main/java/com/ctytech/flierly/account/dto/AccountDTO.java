@@ -11,6 +11,7 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -39,14 +40,30 @@ public class AccountDTO implements Serializable {
     @NotBlank(message = "{account.registered.email.absent}")
     private String email;
 
-    @NotNull(message = "{account.branch.absent}")
-    private BranchDTO branch;
-
     @NotNull(message = "{account.type.absent}")
-    private AccountTypeDTO accountType;
+    private Long accountTypeId;
 
     @NotNull(message = "{account.subtype.absent}")
+    private Long accountSubtypeId;
+
+    @NotNull(message = "{account.branch.absent}")
+    private Long branchId;
+
+    private Long taxIdentityId;
+
+    private Set<Long> contactIds = new HashSet<>();
+
+    private Set<Long> addressIds = new HashSet<>();
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long parentAccountId;
+
+    private AccountTypeDTO accountType;
+
     private AccountSubtypeDTO accountSubtype;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private BranchDTO branch;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private TaxIdentityDTO taxIdentity;
@@ -60,5 +77,6 @@ public class AccountDTO implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Set<AccountDTO> childAccounts;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private AccountDTO parentAccount;
 }
