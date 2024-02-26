@@ -1,0 +1,28 @@
+# Example file for reference on what config(env_variable's) needed to run this application
+# Only Replace the placeholders
+spring:
+  datasource:
+    # Replace the placeholders (<Host>, <Port>, <Database>, <DatabaseUserName>, <DatabasePassword>)
+    # with your actual database connection details.
+    url: jdbc:postgresql://<Host>:<Port>/<Database>
+    username: <DatabaseUserName>
+    password: <DatabasePassword>
+  jpa:
+    hibernate:
+      ddl-auto: <Value> # Choose one of: create, update, validate, none, create-drop, Refer Spring-docs for more.
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+# Server
+server:
+  port: <Value> # Application Port ex: 3111
+  servlet:
+    context-path: <Value> # Application starting path ex: /api
+
+# Logging
+
+logging:
+  level:
+    #    root: INFO
+    org.hibernate: DEBUG
