@@ -8,6 +8,7 @@ import com.ctytech.flierly.account.entity.Account;
 import com.ctytech.flierly.account.entity.AccountSubtype;
 import com.ctytech.flierly.account.entity.AccountType;
 import com.ctytech.flierly.account.exception.AccountServiceException;
+import com.ctytech.flierly.account.repository.AccountRepository;
 import com.ctytech.flierly.account.service.AccountSubtypeService;
 import com.ctytech.flierly.account.service.AccountTypeService;
 import com.ctytech.flierly.address.dto.AddressDTO;
@@ -20,6 +21,7 @@ import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
 import com.ctytech.flierly.taxation.service.TaxIdentityService;
 import com.ctytech.flierly.utility.ModelMappingUtils;
 import jakarta.annotation.PostConstruct;
+import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
@@ -27,10 +29,7 @@ import org.modelmapper.spi.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class AccountMapper {
@@ -50,6 +49,8 @@ public class AccountMapper {
     private ContactService contactService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @PostConstruct
     public void init() {
@@ -89,7 +90,7 @@ public class AccountMapper {
                 .addMapping(AccountDTO::getAlternatePhone, Account::setAlternatePhone)
                 .addMapping(AccountDTO::getEmail, Account::setEmail)
                 .addMappings(mapper -> mapper
-                        .using(accountTypeIDtoEntityConverter)
+                        .using(accountTypeIdtoEntityConverter)
                         .map(AccountDTO::getAccountTypeId, Account::setAccountType))
                 .addMappings(mapper -> mapper
                         .using(accountSubtypeIdToEntityConverter)
@@ -97,7 +98,12 @@ public class AccountMapper {
                 .addMapping(AccountDTO::getBranchId, Account::setBranchId)
                 .addMapping(AccountDTO::getTaxIdentityId, Account::setTaxIdentityId)
                 .addMapping(AccountDTO::getContactIds, Account::setContactIds)
-                .addMapping(AccountDTO::getAddressIds, Account::setAddressIds);
+                .addMapping(AccountDTO::getAddressIds, Account::setAddressIds)
+                .addMappings(mapper -> mapper
+                        .when(Conditions.isNotNull())
+                        .using(accountIdToEntityConverter)
+                        .map(AccountDTO::getParentAccountId, Account::setParentAccount)
+                );
 
 
         // AccountType Mapping
@@ -113,7 +119,7 @@ public class AccountMapper {
         modelMapper.createTypeMap(AccountSubtype.class, AccountSubtypeDTO.class).implicitMappings();
     }
 
-    private final Converter<Long, AccountType> accountTypeIDtoEntityConverter = mappingContext -> {
+    private final Converter<Long, AccountType> accountTypeIdtoEntityConverter = mappingContext -> {
         if (mappingContext.getSource() != null) {
             try {
                 AccountTypeDTO accountTypeDTO = accountTypeService.fetch(mappingContext.getSource());
@@ -123,6 +129,17 @@ public class AccountMapper {
                 errorMessages.add(new ErrorMessage(e.getMessage()));
                 throw new MappingException(errorMessages);
             }
+        }
+        return null;
+    };
+
+    private final Converter<Long, Account> accountIdToEntityConverter = mappingContext -> {
+        if (mappingContext.getSource() != null) {
+            Optional<Account> optionalAccount = accountRepository.findById(mappingContext.getSource());
+            if (optionalAccount.isPresent()) return optionalAccount.get();
+            List<ErrorMessage> errorMessages = new ArrayList<>();
+            errorMessages.add(new ErrorMessage("account.invalid.parent"));
+            throw new MappingException(errorMessages);
         }
         return null;
     };
@@ -187,7 +204,17 @@ public class AccountMapper {
         return null;
     };
 
-    private AccountDTO toDTO(Account account, String... includeDTOs) {
+    public AccountType idToAccountType(Long id) throws AccountServiceException {
+        AccountTypeDTO accountTypeDTO = accountTypeService.fetch(id);
+        return modelMapper.map(accountTypeDTO, AccountType.class);
+    }
+
+    public AccountSubtype idToAccountSubtype(Long id) throws AccountServiceException {
+        AccountSubtypeDTO subtypeDTO = accountSubtypeService.fetch(id);
+        return modelMapper.map(subtypeDTO, AccountSubtype.class);
+    }
+
+    public AccountDTO toDTO(Account account, String... includeDTOs) {
         if (account == null) return null;
         modelMapper.getTypeMap(Account.class, AccountDTO.class)
                 // Include BranchDTO based on includeDTOs
