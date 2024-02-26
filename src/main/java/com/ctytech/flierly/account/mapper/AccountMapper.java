@@ -138,7 +138,7 @@ public class AccountMapper {
             Optional<Account> optionalAccount = accountRepository.findById(mappingContext.getSource());
             if (optionalAccount.isPresent()) return optionalAccount.get();
             List<ErrorMessage> errorMessages = new ArrayList<>();
-            errorMessages.add(new ErrorMessage("account.invalid.parent"));
+            errorMessages.add(new ErrorMessage("AccountMapper.INVALID_PARENT"));
             throw new MappingException(errorMessages);
         }
         return null;
@@ -212,6 +212,22 @@ public class AccountMapper {
     public AccountSubtype idToAccountSubtype(Long id) throws AccountServiceException {
         AccountSubtypeDTO subtypeDTO = accountSubtypeService.fetch(id);
         return modelMapper.map(subtypeDTO, AccountSubtype.class);
+    }
+
+    public BranchDTO idToBranchDTO(Long id) throws FlierlyException {
+        return branchService.fetch(id);
+    }
+
+    public TaxIdentityDTO idTotaxIdentityDTO(Long id) throws FlierlyException {
+        return taxIdentityService.fetch(id);
+    }
+
+    public Set<ContactDTO> contactIdsToDTOs(Set<Long> ids) {
+        return contactService.fetchAllByIds(ids);
+    }
+
+    public Set<AddressDTO> addressIdsToDTOs(Set<Long> ids) {
+        return addressService.fetchAllByIds(ids);
     }
 
     public AccountDTO toDTO(Account account, String... includeDTOs) {
