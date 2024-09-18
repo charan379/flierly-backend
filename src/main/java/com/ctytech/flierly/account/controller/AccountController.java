@@ -35,11 +35,10 @@ public class AccountController {
     public ResponseEntity<AccountDTO> getAccountById(@PathVariable(name = "id") Long id) throws AccountServiceException {
         AccountDTO accountDTO = accountService.fetch(id);
         return new ResponseEntity<>(accountDTO, HttpStatus.OK);
-
     }
 
-    @GetMapping(value = "/allAccounts")
-    public ResponseEntity<Set<AccountDTO>> getAllAccounts(@RequestParam Set<Long> ids) throws AccountServiceException {
+    @GetMapping(value = "/all-accounts")
+    public ResponseEntity<Set<AccountDTO>> getAllAccountsByIds(@RequestParam(name = "ids") Set<Long> ids) {
         Set<AccountDTO> accountDTO = accountService.fetchAllByIds(ids);
         return new ResponseEntity<>(accountDTO, HttpStatus.OK);
     }
@@ -62,17 +61,17 @@ public class AccountController {
 
     }
 
-    @PatchMapping(value = "/{id}/tax-identity")
-    public ResponseEntity<TaxIdentityDTO> ModifyAccountTaxIdentity(@PathVariable(name = "id") Long id,
-                                                                   @RequestParam Long taxIdentityId)
+    @PatchMapping(value = "/{id}/tax-identity/{taxIdentityId}")
+    public ResponseEntity<TaxIdentityDTO> modifyAccountTaxIdentity(@PathVariable(name = "id") Long id,
+                                                                   @PathVariable(name = "taxIdentityId") Long taxIdentityId)
             throws AccountServiceException {
         TaxIdentityDTO taxIdentityDTO = accountService.modifyAccountTaxIdentity(id, taxIdentityId);
         return new ResponseEntity<>(taxIdentityDTO, HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{id}/contacts")
-    public ResponseEntity<Set<ContactDTO>> ModifyAccountContacts(@PathVariable(name = "id") Long id,
-                                                                 @RequestParam Set<Long> contactIds)
+    public ResponseEntity<Set<ContactDTO>> modifyAccountContacts(@PathVariable(name = "id") Long id,
+                                                                 @RequestBody @Valid Set<Long> contactIds)
             throws AccountServiceException {
         Set<ContactDTO> contactDTO = accountService.modifyAccountContacts(id, contactIds);
         return new ResponseEntity<>(contactDTO, HttpStatus.OK);
@@ -81,35 +80,31 @@ public class AccountController {
 
     @PatchMapping(value = "/{id}/address")
     public ResponseEntity<Set<AddressDTO>> modifyAccountAddresses(@PathVariable(name = "id") Long id,
-                                                                  @RequestParam Set<Long> addresses)
+                                                                  @RequestBody Set<Long> addresses)
             throws AccountServiceException {
         Set<AddressDTO> addressDTO = accountService.modifyAccountAddresses(id, addresses);
         return new ResponseEntity<>(addressDTO, HttpStatus.OK);
 
     }
 
-    @PatchMapping(value = "/{id}/parent")
+    @PatchMapping(value = "/{id}/parent/{parentId}")
     public ResponseEntity<AccountDTO> modifyAccountParent(@PathVariable(name = "id") Long id,
-                                                          @RequestParam Long parent)
+                                                          @PathVariable(name = "parentId") Long parent)
             throws AccountServiceException {
         AccountDTO accountDTO = accountService.modifyAccountParent(id, parent);
         return new ResponseEntity<>(accountDTO, HttpStatus.OK);
     }
 
 
-    @GetMapping(value = "/existsByRegisteredPhone")
-    public boolean existsByRegisteredPhone(@RequestParam String registeredPhone) throws AccountServiceException {
+    @GetMapping(value = "/registration-phone-exists/{phone}")
+    public boolean existsByRegisteredPhone(@PathVariable(name = "phone") String registeredPhone) {
         return accountService.existsByRegisteredPhone(registeredPhone);
     }
 
-    @GetMapping(value = "/existsByEmail")
-    public boolean existsByEmail(@RequestParam String email) throws AccountServiceException{
+    @GetMapping(value = "/email-exists/{email}")
+    public boolean existsByEmail(@PathVariable(name = "email") String email) {
         return accountService.existsByEmail(email);
     }
-
-
-
-
 
 
 }

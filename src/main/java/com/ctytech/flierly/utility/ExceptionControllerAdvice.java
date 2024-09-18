@@ -37,13 +37,11 @@ public class ExceptionControllerAdvice {
         er.put(exception.getMessage(), exception.getStackTrace());
         errorInfo.setStackTrace(er);
 
-
         return new ResponseEntity<>(errorInfo, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(FlierlyException.class)
     public ResponseEntity<ErrorInfo> flierlyExceptionHandler(FlierlyException flierlyException) {
-
 
         ErrorInfo errorInfo = new ErrorInfo();
 

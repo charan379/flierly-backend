@@ -125,9 +125,7 @@ public class AccountMapper {
                 AccountTypeDTO accountTypeDTO = accountTypeService.fetch(mappingContext.getSource());
                 return modelMapper.map(accountTypeDTO, AccountType.class);
             } catch (AccountServiceException e) {
-                List<ErrorMessage> errorMessages = new ArrayList<>();
-                errorMessages.add(new ErrorMessage(e.getMessage()));
-                throw new MappingException(errorMessages);
+                throw new RuntimeException(e.getMessage());
             }
         }
         return null;
@@ -140,6 +138,15 @@ public class AccountMapper {
             List<ErrorMessage> errorMessages = new ArrayList<>();
             errorMessages.add(new ErrorMessage("AccountMapper.INVALID_PARENT"));
             throw new MappingException(errorMessages);
+        }
+        return null;
+    };
+
+
+    private final Converter<Long, AccountDTO> accountIdToDTOConverter = mappingContext -> {
+        if (mappingContext.getSource() != null) {
+            Optional<Account> optionalAccount = accountRepository.findById(mappingContext.getSource());
+            return optionalAccount.map(this::toDTO).orElse(null);
         }
         return null;
     };
@@ -252,7 +259,12 @@ public class AccountMapper {
                 .addMappings(mapper -> mapper
                         .when(modelMappingUtils.canInclude("addresses", includeDTOs))
                         .using(addressIdsToDTOsConverter)
-                        .map(Account::getAddressIds, AccountDTO::setAddresses));
+                        .map(Account::getAddressIds, AccountDTO::setAddresses))
+                // Include Parent Account details based on includeDTOs
+                .addMappings(mapper -> mapper
+                        .when(modelMappingUtils.canInclude("parent_account", includeDTOs))
+                        .map(Account::getParentAccount, AccountDTO::setParentAccount)
+                );
         return modelMapper.map(account, AccountDTO.class);
     }
 

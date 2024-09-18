@@ -4,6 +4,7 @@ import com.ctytech.flierly.address.dto.AddressDTO;
 import com.ctytech.flierly.contact.dto.ContactDTO;
 import com.ctytech.flierly.organization.dto.BranchDTO;
 import com.ctytech.flierly.taxation.dto.TaxIdentityDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
