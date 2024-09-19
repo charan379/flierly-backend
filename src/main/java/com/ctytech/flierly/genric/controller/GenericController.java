@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/{entity}")
 public class GenericController<T, ID> {
     @Autowired
     private GenericService<T, ID> genericService;
