@@ -26,8 +26,8 @@ public class RolePrivileges {
     @ManyToMany
     @JoinTable(
             name = "iam_role_privileges",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id")
+            joinColumns = @JoinColumn(name = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "privilegeId")
     )
     private List<Privilege> privileges;
 }
